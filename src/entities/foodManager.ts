@@ -5,6 +5,8 @@ import { FoodBase } from './foodBase'
 import { Skewer } from './skewer'
 import { MainScene } from '../scenes/main'
 import { Ingredient, IngredientArray } from '../misc/ingredient'
+import { Utils } from '../misc/utils'
+import { ingredientCharMapping } from '../rules/regExpEvent'
 
 export class FoodManager {
 
@@ -48,8 +50,16 @@ export class FoodManager {
     }
     
     public rearrange() {
+        // console.log("==============================")
         for(let i = 0; i < this.skewers.length; i++) {
+            // console.log("skewer", i)
             this.rearrangeSkewer(i)
+        }
+    }
+
+    public resetHover() {
+        for (let arrangement of this.arrangement) {
+            arrangement.forEach((foodSpot) => {foodSpot.hover = false})
         }
     }
 
@@ -59,6 +69,10 @@ export class FoodManager {
         for (let spot of this.arrangement[skewerIndex]) {
             if (spot.currentFoodItem !== undefined) {
                 foodItems.push(spot.currentFoodItem)
+                // console.log(Utils.ingredientString(spot.currentFoodItem.ingredient), spot.hover)
+            }
+            else {
+                // console.log("Empty", spot.hover)
             }
         }
 
@@ -79,6 +93,17 @@ export class FoodManager {
                 let foodItem = foodItems[i]
                 let foodSpot = filteredArrangement[startIndex+i]
                 foodItem.dropToFoodSpot(foodSpot)
+            }
+        }
+
+        // console.log("AFTER REARRANGE")
+
+        for (let spot of this.arrangement[skewerIndex]) {
+            if (spot.currentFoodItem !== undefined) {
+                // console.log(Utils.ingredientString(spot.currentFoodItem.ingredient), spot.hover)
+            }
+            else {
+                // console.log("Empty", spot.hover)
             }
         }
 
