@@ -16,10 +16,10 @@ export class RuleManager {
 
     constructor(scene: MainScene) {
         this.scene = scene
-        let backgroundBoard = scene.add.image(10, 10, 'background_board_dark')
+        let backgroundBoard = scene.add.image(0, 0, 'background_board_dark')
         backgroundBoard.setOrigin(0, 0)
-        backgroundBoard.setDisplaySize(250, 380)
-        backgroundBoard.setAlpha(0.5)
+        backgroundBoard.setDisplaySize(260, 450)
+        backgroundBoard.setAlpha(0.7)
 
         for (let i = 0; i < 5; i++) {
             let numberText = scene.add.text(15, 20 + i * 90, '' + (i + 1), { fontFamily: 'Kalam' })

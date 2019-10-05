@@ -16,7 +16,7 @@ export class FoodManager {
         this.scene = scene
         let backgroundBoard = scene.add.image(0, 0, 'background_board')
         backgroundBoard.setOrigin(0, 0)
-        backgroundBoard.setAlpha(0.3)
+        backgroundBoard.setAlpha(1)
 
         this.skewers.push(new Skewer(scene, this, 575, 80))
         this.skewers.push(new Skewer(scene, this, 575, 200))

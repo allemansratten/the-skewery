@@ -6,7 +6,7 @@ let gameConfig: object = {
     width: 900,
     height: 400,
     parent: "game_canvas",
-    backgroundColor: "#bda4a4",
+    backgroundColor: "#000000",
     scene: [MainScene],
 }
 
