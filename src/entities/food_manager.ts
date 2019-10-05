@@ -1,4 +1,5 @@
 import 'phaser'
+import { FoodItem } from '../entities/food_item'
 import { Ingredient, Ingredient2Frame } from '../misc/ingredient'
 
 class Vector2 extends Phaser.Math.Vector2 { }
@@ -14,29 +15,9 @@ export class FoodManager {
     constructor(scene: Phaser.Scene) {
         this.scene = scene
 
-        scene.input.on('dragstart', function (pointer: Phaser.Input.Pointer, gameObject: Phaser.GameObjects.Image) {
-            gameObject.setTint(0xff0000);
-        });
-
-        scene.input.on('drag', function (pointer: Phaser.Input.Pointer, gameObject: Phaser.GameObjects.Image, dragX: number, dragY: number) {
-            gameObject.x = dragX;
-            gameObject.y = dragY;
-
-        });
-
-        scene.input.on('dragend', function (pointer: Phaser.Input.Pointer, gameObject: Phaser.GameObjects.Image) {
-            gameObject.clearTint();
-        });
-
         
         let addFoodItem = (x: number, y: number, ingredient: Ingredient): Phaser.GameObjects.Image => {
-            let food_item = scene.add.image(x, y, "ingredient").setInteractive();
-            food_item.setFrame(Ingredient2Frame[ingredient])
-            food_item.setDataEnabled()
-            food_item.setData("ingredient", ingredient)
-
-            scene.input.setDraggable(food_item);
-
+            let food_item = new FoodItem(scene, x, y, ingredient)
             return food_item
         }
 
