@@ -2,7 +2,6 @@ import "phaser"
 import { Ingredient } from "../misc/ingredient";
 import { FoodManager } from '../entities/foodManager'
 import { RuleManager } from '../entities/ruleManager'
-import { Utils } from '../misc/utils'
 
 export class MainScene extends Phaser.Scene {
     constructor() {
@@ -12,6 +11,7 @@ export class MainScene extends Phaser.Scene {
     }
 
     foodManager: FoodManager
+    ruleManager: RuleManager
 
     preload() {
         this.load.image('skewer', 'assets/skewer.png');
@@ -25,7 +25,7 @@ export class MainScene extends Phaser.Scene {
 
     create() {
         this.foodManager = new FoodManager(this)
-        new RuleManager(this)
+        this.ruleManager = new RuleManager(this)
     }
 
     update(time: number, delta: number) {

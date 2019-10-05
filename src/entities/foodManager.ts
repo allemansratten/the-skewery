@@ -2,16 +2,15 @@ import 'phaser'
 import { FoodItem } from './foodItem'
 import { FoodSpot } from './foodSpot'
 import { FoodBase } from './foodBase'
-import { FoodBin } from './foodBin'
+import { MainScene } from '../scenes/main'
 import { Ingredient, IngredientArray } from '../misc/ingredient'
 
 export class FoodManager {
 
-    scene: Phaser.Scene
+    scene: MainScene
     arrangement: FoodSpot[] = new Array<FoodSpot>()
 
-
-    constructor(scene: Phaser.Scene) {
+    constructor(scene: MainScene) {
         this.scene = scene
         let backgroundBoard = scene.add.image(0, 0, 'background_board')
         backgroundBoard.setOrigin(0, 0)
@@ -31,17 +30,11 @@ export class FoodManager {
             new FoodBase(scene, 400+i, 350, ingredient, this)
             i += 64
         }
-
-        let checkArrangementButton = scene.add.image(250, 50, 'eye').setInteractive();
-        checkArrangementButton.on('pointerup', (pointer) => {
-            this.rearrange()
-        })
-
     }
 
     update(time: number, delta: number) { }
 
-    getArrangement() {
+    public getArrangement() {
         let ingredientArrangement = new Array<Ingredient>()
 
         for(let spot of this.arrangement) {
@@ -62,7 +55,6 @@ export class FoodManager {
             }
         }
 
-        console.log(foodItems.length)
         if (foodItems.length !== this.arrangement.length) {
             // reset all spots
             for (let spot of this.arrangement) {
@@ -82,5 +74,7 @@ export class FoodManager {
                 foodItem.dropToFoodSpot(foodSpot)
             }
         }
+
+        this.scene.ruleManager.updateLevelText()
     }
 }
