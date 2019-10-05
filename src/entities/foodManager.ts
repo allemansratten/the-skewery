@@ -62,7 +62,6 @@ export class FoodManager {
             }
         }
 
-        console.log(foodItems.length)
         if (foodItems.length !== this.arrangement.length) {
             // reset all spots
             for (let spot of this.arrangement) {
