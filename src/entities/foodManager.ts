@@ -1,7 +1,7 @@
 import 'phaser'
-import { FoodItem } from '../entities/food_item'
-import { FoodSpot } from '../entities/food_spot'
-import { FoodBase } from '../entities/food_base'
+import { FoodItem } from './foodItem'
+import { FoodSpot } from './foodSpot'
+import { FoodBase } from './foodBase'
 import { Ingredient, IngredientArray } from '../misc/ingredient'
 
 export class FoodManager {

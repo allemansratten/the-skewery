@@ -1,9 +1,9 @@
 import 'phaser'
 
-import { FoodBase } from './food_base'
+import { FoodBase } from './foodBase'
 import { Ingredient } from '../misc/ingredient'
 import { Utils } from '../misc/utils'
-import { FoodSpot } from './food_spot'
+import { FoodSpot } from './foodSpot'
 
 enum FoodItemState {
     INVISIBLE,

@@ -1,5 +1,5 @@
-import { Ingredient } from "../misc/ingredient";
+import { Ingredient } from "../misc/ingredient"
 
 export interface RuleEvent {
-  count(arrangement : Ingredient[]) : number;
+    count(arrangement : Ingredient[]) : number;
 }

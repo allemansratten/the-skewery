@@ -1,5 +1,5 @@
 import 'phaser'
-import { FoodItem } from './food_item'
+import { FoodItem } from './foodItem'
 
 export class FoodSpot extends Phaser.GameObjects.Image {
     zone: Phaser.GameObjects.Zone
