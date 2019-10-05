@@ -1,12 +1,12 @@
 import { RuleEvent } from "./ruleEvent"
-import { arrangementToString, Ingredient, ingredientCharMapping } from "../misc/ingredient"
+import { arrangementToString, Ingredient } from "../misc/ingredient"
 
 export class RegExpEvent implements RuleEvent {
 
     private regExp: RegExp
 
     constructor(private regExpString : string) {
-        this.regExp = new RegExp(regExpString, 'g')
+        this.regExp = new RegExp(this.regExpString, 'g')
     }
 
     count(arr : Ingredient[]) : number {
