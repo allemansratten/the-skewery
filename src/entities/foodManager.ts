@@ -28,7 +28,7 @@ export class FoodManager {
         // Instantiate food bases
         let i = 0
         for(let ingredient of IngredientArray) {
-            new FoodBase(scene, 400+i, 350, ingredient)
+            new FoodBase(scene, 400+i, 350, ingredient, this)
             i += 64
         }
 
@@ -55,19 +55,32 @@ export class FoodManager {
 
     rearrange() {
         let foodItems = new Array<FoodItem>()
+        // get all items
         for (let spot of this.arrangement) {
             if (spot.currentFoodItem !== undefined) {
                 foodItems.push(spot.currentFoodItem)
-                spot.currentFoodItem.currentFoodSpot = undefined
             }
-            spot.currentFoodItem = undefined
         }
-        let startIndex: number = (this.arrangement.length - foodItems.length)/2
-        startIndex = Math.floor(startIndex)
-        for (let i = 0; i < foodItems.length; i++){
-            let foodItem = foodItems[i]
-            let foodSpot = this.arrangement[startIndex+i]
-            foodItem.dropToFoodSpot(foodSpot)
+
+        console.log(foodItems.length)
+        if (foodItems.length !== this.arrangement.length) {
+            // reset all spots
+            for (let spot of this.arrangement) {
+                if (spot.currentFoodItem !== undefined) {
+                    spot.currentFoodItem.currentFoodSpot = undefined
+                }
+                spot.currentFoodItem = undefined
+            }
+
+            // find new spots
+            let filteredArrangement = this.arrangement.filter((foodSpot) => !foodSpot.hover)
+            let startIndex: number = (filteredArrangement.length - foodItems.length)/2
+            startIndex = Math.floor(startIndex)
+            for (let i = 0; i < foodItems.length; i++){
+                let foodItem = foodItems[i]
+                let foodSpot = filteredArrangement[startIndex+i]
+                foodItem.dropToFoodSpot(foodSpot)
+            }
         }
     }
 }
