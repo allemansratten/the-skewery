@@ -40,6 +40,7 @@ export class FoodItem extends Phaser.GameObjects.Image {
         })
 
         this.on('dragstart', (pointer: Phaser.Input.Pointer) => {
+            // console.log("dragstart")
             this.setTint(0xAAAAAA);
             this.x = pointer.position.x
             this.y = pointer.position.y
@@ -53,6 +54,7 @@ export class FoodItem extends Phaser.GameObjects.Image {
             if (this.currentFoodSpot !== undefined) {
                 this.currentFoodSpot.hover = true;
             }
+
             this.removeFoodSpot()
             foodManager.rearrange()
 
@@ -73,29 +75,32 @@ export class FoodItem extends Phaser.GameObjects.Image {
                 this.clearTint();
             }
             // clear foodspot hover
-            foodManager.arrangement[0].forEach((foodSpot) => {foodSpot.hover = false})
+            foodManager.resetHover()
+            
         });
         
         this.on("drop", (pointer: Phaser.Input.Pointer, dropZone: Phaser.GameObjects.Image) => {
+            // console.log("drop")
             if (dropZone instanceof FoodSpot) {
                 this.dropToFoodSpot(dropZone)
+                // clear foodspot hover
+                foodManager.resetHover()
+                foodManager.rearrange()
             } else {
                 this.remove()
             }
             
-            // clear foodspot hover
-            foodManager.arrangement[0].forEach((foodSpot) => {foodSpot.hover = false})
-            foodManager.rearrange()
         })
 
         this.on("dragenter", (pointer: Phaser.Input.Pointer, dropZone: FoodSpot) => {
+            // console.log("dragenter")
             dropZone.hover = true
             
             foodManager.rearrange()
         })
         this.on("dragleave", (pointer: Phaser.Input.Pointer, dropZone: FoodSpot) => {
-            dropZone.hover = false
-
+            // console.log("dragleave")
+            foodManager.resetHover()
             foodManager.rearrange()
         })
 
