@@ -79,15 +79,6 @@ export class FoodItem extends Phaser.GameObjects.Image {
         this.on("drop", (pointer: Phaser.Input.Pointer, dropZone: Phaser.GameObjects.Image) => {
             if (dropZone instanceof FoodSpot) {
                 this.dropToFoodSpot(dropZone)
-            // } else if(dropZone instanceof FoodBin) {
-            //     this.state = FoodItemState.THROWN_AWAY
-
-            //     scene.tweens.add({
-            //         targets: this,
-            //         alpha: 0,
-            //         duration: 200,
-            //         ease: 'Power2'
-            //       })
             } else {
                 this.remove()
             }

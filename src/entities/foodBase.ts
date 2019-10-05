@@ -3,7 +3,7 @@ import 'phaser'
 import { FoodItem } from './foodItem'
 import { Ingredient } from '../misc/ingredient'
 import { Utils } from '../misc/utils'
-import { FoodManager } from './food_manager'
+import { FoodManager } from './foodManager'
 
 export class FoodBase extends Phaser.GameObjects.Image {
 

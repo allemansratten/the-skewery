@@ -18,13 +18,11 @@ export class FoodManager {
         backgroundBoard.setOrigin(0, 0)
         backgroundBoard.setAlpha(1)
 
-        this.skewers.push(new Skewer(scene, this, 575, 80))
-        this.skewers.push(new Skewer(scene, this, 575, 200))
 
         // Instantiate food bases
         let i = 0
         for(let ingredient of IngredientArray) {
-            new FoodBase(scene, 400+i, 350, ingredient, this)
+            new FoodBase(scene, 470+i, 350, ingredient, this)
             i += 64
         }
     }
