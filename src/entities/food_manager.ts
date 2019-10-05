@@ -8,6 +8,8 @@ import { Utils } from '../misc/utils'
 export class FoodManager {
 
     scene: Phaser.Scene
+    skewer: FoodSpot[] = new Array<FoodSpot>()
+
 
     constructor(scene: Phaser.Scene) {
         this.scene = scene
@@ -17,7 +19,8 @@ export class FoodManager {
         }
 
         for (let i = 0; i < 11; i++) {
-            addFoodSpot(170 + i * 55, 100)
+            let foodSpot = addFoodSpot(170 + i * 55, 100)
+            this.skewer.push(foodSpot)
         }
 
         let addFoodBase = (x: number, y: number, ingredient: Ingredient): Phaser.GameObjects.Image => {
@@ -26,8 +29,7 @@ export class FoodManager {
         }
         
         let i = 0
-        for(let ingredient in IngredientArray) {
-            // @ts-ignore
+        for(let ingredient of IngredientArray) {
             addFoodBase(400+i, 400, ingredient)
             i += 64
         }
