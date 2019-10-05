@@ -15,6 +15,7 @@ export class MainScene extends Phaser.Scene {
     preload() {
         this.load.image('skewer', 'assets/skewer.png');
         this.load.spritesheet('ingredient', 'assets/ingredient.png', { frameWidth: 64, frameHeight: 64 });
+        this.load.spritesheet('ingredient_base', 'assets/ingredient_base.png', { frameWidth: 64, frameHeight: 64 });
     }
 
     create() {
@@ -22,7 +23,7 @@ export class MainScene extends Phaser.Scene {
         let skewer = this.add.image(450, 100, 'skewer')
         let randomitem = this.add.image(450, 100, 'ingredient')
         randomitem.setFrame(0)
-        // skewer.setDisplaySize(800, 80)
+        this.foodManager = new FoodManager(this)
 
         // Rule usage examples
         let aj = new AdjacencyRule(Ingredient.Pepper, Ingredient.Tomato)
@@ -32,6 +33,5 @@ export class MainScene extends Phaser.Scene {
     }
 
     update(time: number, delta: number) {
-        // this.ballManager.update(time, delta)
     }
 }
