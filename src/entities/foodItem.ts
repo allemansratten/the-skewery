@@ -64,10 +64,16 @@ export class FoodItem extends Phaser.GameObjects.Image {
 
         this.on('dragend', (pointer: Phaser.Input.Pointer) => {
             this.state = FoodItemState.PLACED
-            this.clearTint();
-
+            
+            if (this.currentFoodSpot === undefined) {
+                this.remove()
+            }
+            else {
+                this.clearTint();
+            }
             // clear foodspot hover
             foodManager.arrangement.forEach((foodSpot) => {foodSpot.hover = false})
+            console.log("dragend")
         });
         
         this.on("drop", (pointer: Phaser.Input.Pointer, dropZone: Phaser.GameObjects.Image) => {
@@ -83,17 +89,13 @@ export class FoodItem extends Phaser.GameObjects.Image {
             //         ease: 'Power2'
             //       })
             } else {
-                scene.tweens.add({
-                    targets: this,
-                    alpha: 0,
-                    duration: 200,
-                    ease: 'Power2'
-                })
+                this.remove()
             }
             
             // clear foodspot hover
             foodManager.arrangement.forEach((foodSpot) => {foodSpot.hover = false})
             foodManager.rearrange()
+            console.log("drop")
         })
 
         this.on("dragenter", (pointer: Phaser.Input.Pointer, dropZone: FoodSpot) => {
@@ -137,5 +139,16 @@ export class FoodItem extends Phaser.GameObjects.Image {
             this.currentFoodSpot.currentFoodItem = undefined
             this.currentFoodSpot = undefined
         }
+    }
+
+    public remove() {
+        this.state = FoodItemState.THROWN_AWAY
+
+        this.scene.tweens.add({
+            targets: this,
+            alpha: 0,
+            duration: 200,
+            ease: 'Power2'
+        })
     }
 }
