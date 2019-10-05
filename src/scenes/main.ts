@@ -22,11 +22,8 @@ export class MainScene extends Phaser.Scene {
     create() {
         // background
         let skewer = this.add.image(450, 100, 'skewer')
-        let randomitem = this.add.image(450, 100, 'ingredient')
-        randomitem.setFrame(0)
         this.foodManager = new FoodManager(this)
-        console.log(Utils.ingredientNum(Ingredient.Onion))
-        console.log(Utils.ingredientString(Ingredient.Onion))
+
         // Rule usage examples
         let aj = new AdjacencyRule(Ingredient.Pepper, Ingredient.Tomato)
         console.log(aj.acceptable([Ingredient.Tomato]))
