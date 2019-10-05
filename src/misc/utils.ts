@@ -1,10 +1,12 @@
-import { Ingredient } from './ingredient'
+import { Ingredient, Igredient2Frame } from './ingredient'
 
 export class Utils {
+    // @deprecated
     public static ingredient2num(ingredient: string): number {
         return Ingredient[ingredient]
     }
 
+    // @deprecated
     public static num2ingredient(ingredient: number): Ingredient {
         return Ingredient[Ingredient[ingredient]]
     }
