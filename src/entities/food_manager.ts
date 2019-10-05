@@ -24,11 +24,12 @@ export class FoodManager {
         }
         
         addFoodItem(400, 100, Ingredient.Onion)
+        
         let i = 0
         for(let ingredient in IngredientArray) {
             // @ts-ignore
             addFoodBase(400+i, 400, ingredient)
-            i+= 64
+            i += 64
         }
     }
 

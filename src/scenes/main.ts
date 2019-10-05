@@ -22,8 +22,6 @@ export class MainScene extends Phaser.Scene {
     create() {
         // background
         let skewer = this.add.image(450, 100, 'skewer')
-        let randomitem = this.add.image(450, 100, 'ingredient')
-        randomitem.setFrame(0)
         this.foodManager = new FoodManager(this)
 
         // Rule usage examples
