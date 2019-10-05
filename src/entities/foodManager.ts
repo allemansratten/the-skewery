@@ -2,6 +2,7 @@ import 'phaser'
 import { FoodItem } from './foodItem'
 import { FoodSpot } from './foodSpot'
 import { FoodBase } from './foodBase'
+import { FoodBin } from './foodBin'
 import { Ingredient, IngredientArray } from '../misc/ingredient'
 
 export class FoodManager {
@@ -16,6 +17,8 @@ export class FoodManager {
         backgroundBoard.setOrigin(0, 0)
         backgroundBoard.setAlpha(0.3)
         scene.add.image(565, 100, 'skewer')
+
+        new FoodBin(scene, 840, 350)
 
         // Instantiate food spots
         for (let i = 0; i < 10; i++) {
@@ -33,6 +36,7 @@ export class FoodManager {
         checkArrangementButton.on('pointerup', (pointer) => {
             this.rearrange()
         })
+
     }
 
     update(time: number, delta: number) { }

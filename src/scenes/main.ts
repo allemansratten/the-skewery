@@ -15,6 +15,7 @@ export class MainScene extends Phaser.Scene {
     preload() {
         this.load.image('skewer', 'assets/skewer.png');
         this.load.image('food_spot', 'assets/food_spot.png');
+        this.load.image('food_bin', 'assets/food_bin.png');
         this.load.image('background_board', 'assets/background_board.png');
         this.load.spritesheet('ingredient', 'assets/ingredient.png', { frameWidth: 64, frameHeight: 64 });
         this.load.spritesheet('ingredient_base', 'assets/ingredient_base.png', { frameWidth: 64, frameHeight: 64 });
