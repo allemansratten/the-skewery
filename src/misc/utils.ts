@@ -1,13 +1,11 @@
 import { Ingredient } from './ingredient'
 
 export class Utils {
-    // @deprecated
-    public static ingredient2num(ingredient: string): number {
-        return Ingredient[ingredient]
+    public static ingredientNum(ingredient: Ingredient): number {
+        return ingredient
     }
 
-    // @deprecated
-    public static num2ingredient(ingredient: number): Ingredient {
-        return Ingredient[Ingredient[ingredient]]
+    public static ingredientString(ingredient: number): string {
+        return Ingredient[ingredient]
     }
 }

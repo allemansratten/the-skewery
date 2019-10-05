@@ -1,6 +1,7 @@
 import 'phaser'
 
-import { Ingredient, Ingredient2Frame } from '../misc/ingredient'
+import { Ingredient } from '../misc/ingredient'
+import { Utils } from '../misc/utils'
 
 export class FoodItem extends Phaser.GameObjects.Image {
 
@@ -9,7 +10,7 @@ export class FoodItem extends Phaser.GameObjects.Image {
     constructor(scene: Phaser.Scene, x: number, y: number, ingredient: Ingredient) {
         super(scene, x, y, "ingredient");
 
-        this.setFrame(Ingredient2Frame[ingredient])
+        this.setFrame(Utils.ingredientNum(ingredient))
         this.ingredient = ingredient
 
         this.setInteractive()
