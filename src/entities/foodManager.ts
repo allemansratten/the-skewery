@@ -16,9 +16,9 @@ export class FoodManager {
         let backgroundBoard = scene.add.image(0, 0, 'background_board')
         backgroundBoard.setOrigin(0, 0)
         backgroundBoard.setAlpha(0.3)
-        scene.add.image(565, 100, 'skewer')
+        scene.add.image(575, 100, 'skewer')
 
-        new FoodBin(scene, 840, 350)
+        // new FoodBin(scene, 840, 350)
 
         // Instantiate food spots
         for (let i = 0; i < 10; i++) {
