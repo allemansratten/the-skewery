@@ -1,5 +1,5 @@
 import "phaser"
-import { BallManager } from '../entities/ball_manager'
+import { FoodManager } from '../entities/food_manager'
 
 export class MainScene extends Phaser.Scene {
     constructor() {
@@ -8,7 +8,7 @@ export class MainScene extends Phaser.Scene {
         });
     }
 
-    ballManager: BallManager
+    foodManager: FoodManager
 
     preload() {
         this.load.image('skewer', 'assets/skewer.png');
@@ -19,7 +19,7 @@ export class MainScene extends Phaser.Scene {
         let skewer = this.add.image(450, 100, 'skewer')
         skewer.setDisplaySize(800, 80)
 
-        this.ballManager = new BallManager(this)
+        this.foodManager = new FoodManager(this)
     }
 
     update(time: number, delta: number) {
