@@ -6,6 +6,7 @@
   "scripts": {
     "test": "mocha -r ts-node/register test/*.test.ts",
     "start": "webpack --watch & live-server --port=8085 --open=dist/",
+    "search" : "ts-node src/misc/levelSearch.ts",
     "build": "webpack"
   },
   "keywords": [
