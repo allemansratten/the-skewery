@@ -43,10 +43,7 @@ export class FoodItem extends Phaser.GameObjects.Image {
             // TODO: tady je leak, protože se tvoří spousta nových objektů při pohybu objektu
             base.instantiateNew()
             
-            if (this.currentFoodSpot !== undefined) {
-                this.currentFoodSpot.currentFoodItem = undefined
-                this.currentFoodSpot = undefined
-            }
+            this.removeFoodSpot()
         });
 
         this.on('dragend', (pointer: Phaser.Input.Pointer) => {
@@ -55,15 +52,25 @@ export class FoodItem extends Phaser.GameObjects.Image {
         });
 
         this.on("drop", (pointer: Phaser.Input.Pointer, dropZone: FoodSpot) => {
-            this.x = dropZone.x
-            this.y = dropZone.y
-
-            this.currentFoodSpot = dropZone
-
-            dropZone.currentFoodItem = this
+            this.dropToFoodSpot(dropZone)
         })
         this.setAlpha(0.1)
 
         scene.add.existing(this)
+    }
+
+    public dropToFoodSpot (foodSpot: FoodSpot) {
+        this.x = foodSpot.x
+        this.y = foodSpot.y
+
+        this.currentFoodSpot = foodSpot
+        foodSpot.currentFoodItem = this
+    }
+
+    public removeFoodSpot () {
+        if (this.currentFoodSpot !== undefined) {
+            this.currentFoodSpot.currentFoodItem = undefined
+            this.currentFoodSpot = undefined
+        }
     }
 }
