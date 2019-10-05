@@ -1,5 +1,5 @@
 import 'phaser'
-import { FoodItem } from './food_item'
+import { FoodItem } from './foodItem'
 
 export class FoodSpot extends Phaser.GameObjects.Image {
     zone: Phaser.GameObjects.Zone
@@ -10,7 +10,7 @@ export class FoodSpot extends Phaser.GameObjects.Image {
         super(scene, x, y, "food_spot")
 
         this.setInteractive({ dropZone: true });
-        this.setDisplaySize(58, 58)
+        this.setDisplaySize(55, 55)
 
         // let width = 50, height = 50
         // this.zone = scene.add.zone(x, y, width, height).setRectangleDropZone(width, height);

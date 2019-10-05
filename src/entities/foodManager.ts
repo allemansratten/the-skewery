@@ -1,7 +1,7 @@
 import 'phaser'
-import { FoodItem } from '../entities/food_item'
-import { FoodSpot } from '../entities/food_spot'
-import { FoodBase } from '../entities/food_base'
+import { FoodItem } from './foodItem'
+import { FoodSpot } from './foodSpot'
+import { FoodBase } from './foodBase'
 import { Ingredient, IngredientArray } from '../misc/ingredient'
 
 export class FoodManager {
@@ -17,36 +17,25 @@ export class FoodManager {
         backgroundBoard.setAlpha(0.3)
         scene.add.image(565, 100, 'skewer')
 
-        let addFoodSpot = (x: number, y: number): FoodSpot => {
-            return new FoodSpot(scene, x, y)
+        // Instantiate food spots
+        for (let i = 0; i < 10; i++) {
+            this.arrangement.push(new FoodSpot(scene, 295 + i * 55, 170))
         }
 
-        for (let i = 0; i < 4; i++) {
-            let foodSpot = addFoodSpot(270 + i * 58, 170)
-            this.arrangement.push(foodSpot)
-        }
-
-        let addFoodBase = (x: number, y: number, ingredient: Ingredient): Phaser.GameObjects.Image => {
-            let foodBase = new FoodBase(scene, x, y, ingredient, this)
-            return foodBase
-        }
-        
+        // Instantiate food bases
         let i = 0
         for(let ingredient of IngredientArray) {
-            addFoodBase(400+i, 400, ingredient)
+            new FoodBase(scene, 400+i, 350, ingredient, this)
             i += 64
         }
 
-        let checkArrangementButton = scene.add.image(50, 50, 'eye').setInteractive();
+        let checkArrangementButton = scene.add.image(250, 50, 'eye').setInteractive();
         checkArrangementButton.on('pointerup', (pointer) => {
             this.rearrange()
         })
-
     }
 
-    update(time: number, delta: number) {
-
-    }
+    update(time: number, delta: number) { }
 
     getArrangement() {
         let ingredientArrangement = new Array<Ingredient>()

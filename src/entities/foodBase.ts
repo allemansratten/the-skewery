@@ -1,6 +1,6 @@
 import 'phaser'
 
-import { FoodItem } from './food_item'
+import { FoodItem } from './foodItem'
 import { Ingredient } from '../misc/ingredient'
 import { Utils } from '../misc/utils'
 import { FoodManager } from './food_manager'

@@ -1,14 +1,14 @@
 import 'phaser'
 
-import { FoodBase } from './food_base'
-import { FoodManager } from './food_manager'
+import { FoodManager } from './foodManager'
+import { FoodBase } from './foodBase'
 import { Ingredient } from '../misc/ingredient'
 import { Utils } from '../misc/utils'
-import { FoodSpot } from './food_spot'
+import { FoodSpot } from './foodSpot'
 
 enum FoodItemState {
     INVISIBLE,
-    DRAG,
+    DRAG, food_manager
     PLACED,
     THROWN_AWAY,
 }
@@ -37,6 +37,7 @@ export class FoodItem extends Phaser.GameObjects.Image {
             this.setTint(0xAAAAAA);
             this.x = pointer.position.x
             this.y = pointer.position.y
+            
             base.instantiateNew()
 
             if (this.currentFoodSpot !== undefined) {
@@ -44,11 +45,12 @@ export class FoodItem extends Phaser.GameObjects.Image {
             }
             this.removeFoodSpot()
             foodManager.rearrange()
+
+            this.state = FoodItemState.DRAG
+            this.setAlpha(1)
         });
 
         this.on('drag', (pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
-            this.state = FoodItemState.DRAG
-            this.setAlpha(1)
             this.x = pointer.position.x
             this.y = pointer.position.y
         });
