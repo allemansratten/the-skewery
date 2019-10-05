@@ -11,6 +11,6 @@ export let IngredientArray : Ingredient[] = new Array<Ingredient>()
 
 for (let item in Ingredient) {
     if (isNaN(Number(item))) {
-        IngredientArray.push(Utils.stringIngredient(item))
+        IngredientArray.push((<any>Ingredient)[item])
     }
 }
