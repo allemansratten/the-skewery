@@ -3,12 +3,15 @@ import { arrangementToString, Ingredient, ingredientCharMapping } from "../misc/
 
 export class RegExpEvent implements RuleEvent {
 
-    constructor(private regExp : string) {
+    private regExp: RegExp
+
+    constructor(private regExpString : string) {
+        this.regExp = new RegExp(this.regExp, 'g')
     }
 
     count(arr : Ingredient[]) : number {
         let str = arrangementToString(arr)
-        let matches = str.match(new RegExp(this.regExp, 'g'))
+        let matches = str.match(this.regExp)
         if (matches === null) {
             matches = []
         }

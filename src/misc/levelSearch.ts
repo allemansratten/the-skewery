@@ -27,6 +27,7 @@ function shuffle(array : any[]) {
 let maxSize = 4
 let nSkewers = 2
 
+let alphabet = "otep";
 let rulesToTry = [
     new OccurrenceRule(new RegExpEvent('(^|[^o])t($|[^o])'),
         undefined, 0, "t must be adjacent to o"),
@@ -40,9 +41,32 @@ let rulesToTry = [
     new OccurrenceRule(new RegExpEvent('....'), 1, 1),
 ]
 
+function* powerset(set, n) {
+    if(n == 0) {
+        yield []
+    }
+    else {
+        for(let i = 0; i < set.length; i++){
+            let it = powerset(set, n - 1)
+            for(let ps of it){
+                yield [set[i]].concat(ps)
+
+            }
+        }
+    }
+}
+
 function solutionCount(rules : Rule[]) : number {
-    // TODO
-    return 5 - rules.length
+    let solCount = 0
+    const iterator = powerset(alphabet, 3);
+    for (let ps of iterator) {
+        let passEvery = rules.every(rule => rule.acceptable(ps))
+        if (passEvery){
+            console.log(ps);
+            solCount++
+        }
+    }
+    return solCount
 }
 
 function search() {
@@ -51,3 +75,5 @@ function search() {
 }
 
 search()
+
+console.log(solutionCount([rulesToTry[1]]))
