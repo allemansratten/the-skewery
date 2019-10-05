@@ -4,7 +4,7 @@ import { MainScene } from './scenes/main'
 let gameConfig : object = {
   title: "Untitled Untitled Game",
   width: 900,
-  height: 450,
+  height: 400,
   parent: "game_canvas",
   backgroundColor: "#bda4a4",
   scene: [MainScene],

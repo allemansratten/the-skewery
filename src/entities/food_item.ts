@@ -36,12 +36,13 @@ export class FoodItem extends Phaser.GameObjects.Image {
             this.setTint(0xAAAAAA);
             this.x = pointer.position.x
             this.y = pointer.position.y
+            
             base.instantiateNew()
+            this.state = FoodItemState.DRAG
+            this.setAlpha(1)
         });
 
         this.on('drag', (pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
-            this.state = FoodItemState.DRAG
-            this.setAlpha(1)
             this.x = pointer.position.x
             this.y = pointer.position.y
             
