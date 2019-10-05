@@ -40,7 +40,7 @@ export class FoodManager {
 
         let checkArrangementButton = scene.add.image(50, 50, 'eye').setInteractive();
         checkArrangementButton.on('pointerup', (pointer) => {
-            console.log(this.getArrangement())
+            this.rearrange()
         })
 
     }
@@ -59,5 +59,23 @@ export class FoodManager {
         }
 
         return ingredientArrangement
+    }
+
+    rearrange() {
+        let foodItems = new Array<FoodItem>()
+        for (let spot of this.arrangement) {
+            if (spot.currentFoodItem !== undefined) {
+                foodItems.push(spot.currentFoodItem)
+                spot.currentFoodItem.currentFoodSpot = undefined
+            }
+            spot.currentFoodItem = undefined
+        }
+        let startIndex: number = (this.arrangement.length - foodItems.length)/2
+        startIndex = Math.floor(startIndex)
+        for (let i = 0; i < foodItems.length; i++){
+            let foodItem = foodItems[i]
+            let foodSpot = this.arrangement[startIndex+i]
+            foodItem.dropToFoodSpot(foodSpot)
+        }
     }
 }
