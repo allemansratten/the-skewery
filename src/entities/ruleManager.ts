@@ -23,27 +23,49 @@ export class RuleManager {
         for (let i = 0; i < 4; i++) {
             let numberText = scene.add.text(15, 20 + i * 95, '' + (i + 1), { fontFamily: 'Kalam' })
             numberText.setColor('black')
+            numberText.setVisible(false)
             this.numberText.push(numberText)
 
-            let ruleText = scene.add.text(31, 20 + i * 95, "hello", { fontFamily: 'Kalam' })
+            let ruleText = scene.add.text(31, 20 + i * 95, "", { fontFamily: 'Kalam' })
             ruleText.setColor('black')
             ruleText.setWordWrapWidth(230)
+            ruleText.setVisible(false)
             this.ruleText.push(ruleText)
         }
-        this.updateLevelText()
+        this.updateProgress()
     }
 
-    public updateLevelText(): void {
-        for (let i = 0; i < levels[this.curLevel].rules.length; i++) {
+    public updateProgress(): void {
+        let ok = true
+        for (let i = 0; i <= this.curRule; i++) {
+            if (!levels[this.curLevel].rules[i].acceptable(this.scene.foodManager.getArrangement())) {
+                ok = false
+            }
+        }
+
+        if (ok) {
+            if (this.curRule == levels[this.curLevel].rules.length - 1) {
+                console.warn('you aced this level')
+            } else {
+                this.curRule += 1
+            }
+        }
+
+        for (let i = 0; i <= this.curRule; i++) {
+            this.ruleText[i].setVisible(true)
+            this.numberText[i].setVisible(true)
+
             let rule = levels[this.curLevel].rules[i]
             this.ruleText[i].setText(rule.description)
-            if(rule.acceptable(this.scene.foodManager.getArrangement())) {
+            if (rule.acceptable(this.scene.foodManager.getArrangement())) {
                 this.numberText[i].setColor('green')
                 this.ruleText[i].setColor('green')
             } else {
+                ok = false
                 this.numberText[i].setColor('red')
                 this.ruleText[i].setColor('red')
             }
         }
+
     }
 }

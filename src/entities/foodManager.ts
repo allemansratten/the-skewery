@@ -75,6 +75,6 @@ export class FoodManager {
             }
         }
 
-        this.scene.ruleManager.updateLevelText()
+        this.scene.ruleManager.updateProgress()
     }
 }
