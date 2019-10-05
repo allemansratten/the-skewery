@@ -6,6 +6,7 @@ import { FoodBin } from './foodBin'
 import { Ingredient } from '../misc/ingredient'
 import { Utils } from '../misc/utils'
 import { FoodSpot } from './foodSpot'
+import { Scene } from 'phaser'
 
 enum FoodItemState {
     INVISIBLE,
@@ -19,9 +20,12 @@ export class FoodItem extends Phaser.GameObjects.Image {
     ingredient: Ingredient
     state: FoodItemState = FoodItemState.INVISIBLE
     currentFoodSpot: FoodSpot
+    scene: Scene
 
     constructor(scene: Phaser.Scene, x: number, y: number, ingredient: Ingredient, base: FoodBase, foodManager: FoodManager) {
         super(scene, x, y, "ingredient");
+
+        this.scene = scene
 
         this.setFrame(Utils.ingredientNum(ingredient))
         this.setDisplaySize(58, 58)
@@ -102,8 +106,16 @@ export class FoodItem extends Phaser.GameObjects.Image {
     }
     public dropToFoodSpot (foodSpot: FoodSpot) {
         if (foodSpot.isFree()){
-            this.x = foodSpot.x
-            this.y = foodSpot.y
+            // this.x = foodSpot.x
+            // this.y = foodSpot.y
+
+            this.scene.tweens.add({
+                targets: this,
+                x: foodSpot.x,
+                y: foodSpot.y,
+                duration: 200,
+                ease: 'Power2'
+            })
     
             this.currentFoodSpot = foodSpot
             foodSpot.currentFoodItem = this
