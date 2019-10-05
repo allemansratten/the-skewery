@@ -19,7 +19,7 @@ export class RuleManager {
         let backgroundBoard = scene.add.image(0, 0, 'background_board_dark')
         backgroundBoard.setOrigin(0, 0)
         backgroundBoard.setDisplaySize(260, 450)
-        backgroundBoard.setAlpha(0.7)
+        backgroundBoard.setAlpha(1)
 
         for (let i = 0; i < 5; i++) {
             let numberText = scene.add.text(15, 20 + i * 90, '' + (i + 1), { fontFamily: 'Kalam' })
