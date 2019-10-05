@@ -47,7 +47,42 @@ function solutionCount(rules : Rule[]) : number {
 
 function search() {
     shuffle(rulesToTry)
-    // TODO
+    let indices : number[] = []
+    let nBest = 10
+    let bestRulesets = []
+    while (true) {
+        // console.log(indices)
+        let curRules = []
+        for (const i of indices) {
+            curRules.push(rulesToTry[i])
+        }
+        const nSolutions = solutionCount(curRules)
+        if (nSolutions > 0) {
+            bestRulesets.push({nSolutions: nSolutions, indices: [...indices]})
+            bestRulesets.sort((a, b) => {
+                return a.nSolutions - b.nSolutions
+            })
+            bestRulesets = bestRulesets.slice(0, nBest)
+            if (indices.length === 0) {
+                indices.push(-1)
+            } else {
+                indices.push(indices[indices.length - 1])
+            }
+        }
+
+        while(indices.length > 0) {
+            let last = indices.pop()
+            last++
+            if (last !== rulesToTry.length) {
+                indices.push(last)
+                break
+            }
+        }
+        if (indices.length === 0) {
+            break
+        }
+    }
+    console.log(bestRulesets)
 }
 
 search()
