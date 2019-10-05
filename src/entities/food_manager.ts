@@ -8,7 +8,7 @@ import { Utils } from '../misc/utils'
 export class FoodManager {
 
     scene: Phaser.Scene
-    skewer: FoodSpot[] = new Array<FoodSpot>()
+    arrangement: FoodSpot[] = new Array<FoodSpot>()
 
 
     constructor(scene: Phaser.Scene) {
@@ -20,7 +20,7 @@ export class FoodManager {
 
         for (let i = 0; i < 11; i++) {
             let foodSpot = addFoodSpot(170 + i * 55, 100)
-            this.skewer.push(foodSpot)
+            this.arrangement.push(foodSpot)
         }
 
         let addFoodBase = (x: number, y: number, ingredient: Ingredient): Phaser.GameObjects.Image => {
@@ -29,14 +29,33 @@ export class FoodManager {
         }
         
         let i = 0
-        for(let ingredient in IngredientArray) {
+        for(let ingredient of IngredientArray) {
             // @ts-ignore
             addFoodBase(400+i, 400, ingredient)
             i += 64
         }
+
+
+        let checkArrangementButton = scene.add.image(50, 50, 'eye').setInteractive();
+        checkArrangementButton.on('pointerup', (pointer) => {
+            console.log(this.getArrangement())
+        })
+
     }
 
     update(time: number, delta: number) {
 
+    }
+
+    getArrangement() {
+        let ingredientArrangement = new Array<Ingredient>()
+
+        for(let spot of this.arrangement) {
+            if (spot.currentFoodItem !== undefined){
+                ingredientArrangement.push(spot.currentFoodItem.ingredient)
+            }
+        }
+
+        return ingredientArrangement
     }
 }
