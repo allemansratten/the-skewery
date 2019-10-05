@@ -1,11 +1,6 @@
 import 'phaser'
 import { FoodItem } from './food_item'
 
-
-class Vector2 extends Phaser.Math.Vector2 { }
-class Image extends Phaser.GameObjects.Image { }
-class Circle extends Phaser.GameObjects.Arc { }
-
 export class FoodSpot extends Phaser.GameObjects.Image {
     zone: Phaser.GameObjects.Zone
     currentFoodItem: FoodItem
