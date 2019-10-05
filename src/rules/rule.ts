@@ -6,7 +6,10 @@ export class Rule {
     private comment : string
 
     // `event` must occur between `min` and `max` times (either may be undefined)
-    constructor(private event : RuleEvent, private min : number, private max : number) {
+    constructor(private event : RuleEvent,
+                private min : number,
+                private max : number,
+                public description : string) {
         if (min === undefined && max === undefined) {
             throw "Trivial OccurrenceRule; both min and max are set to undefined"
         }
@@ -24,9 +27,5 @@ export class Rule {
             return false
         }
         return true
-    }
-
-    description() : string {
-        return "TODO"
     }
 }
