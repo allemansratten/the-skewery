@@ -1,4 +1,6 @@
 import 'phaser'
+import { FoodItem } from './food_item'
+
 
 class Vector2 extends Phaser.Math.Vector2 { }
 class Image extends Phaser.GameObjects.Image { }
@@ -6,6 +8,7 @@ class Circle extends Phaser.GameObjects.Arc { }
 
 export class FoodSpot extends Phaser.GameObjects.Image {
     zone: Phaser.GameObjects.Zone
+    currentFoodItem: FoodItem
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
         super(scene, x, y, "todo")
@@ -21,5 +24,9 @@ export class FoodSpot extends Phaser.GameObjects.Image {
         // graphics.strokeRect(this.zone.x - this.zone.input.hitArea.width / 2, this.zone.y - this.zone.input.hitArea.height / 2, this.zone.input.hitArea.width, this.zone.input.hitArea.height);
         
         scene.add.existing(this)
+    }
+
+    public isFree(): boolean {
+        return this.currentFoodItem === undefined
     }
 }
