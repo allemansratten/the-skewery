@@ -8,13 +8,6 @@ let gameConfig : object = {
   parent: "game_canvas",
   backgroundColor: "#18216D",
   scene: [MainScene],
-  physics: {
-    default: "arcade",
-    // default: "matter",
-    matter: {
-      debug: true,
-    }
-  },
 }
 
 window.onload = () => {
