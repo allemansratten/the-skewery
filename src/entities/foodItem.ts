@@ -2,7 +2,6 @@ import 'phaser'
 
 import { FoodManager } from './foodManager'
 import { FoodBase } from './foodBase'
-import { FoodBin } from './foodBin'
 import { Ingredient } from '../misc/ingredient'
 import { Utils } from '../misc/utils'
 import { FoodSpot } from './foodSpot'
@@ -45,7 +44,11 @@ export class FoodItem extends Phaser.GameObjects.Image {
             this.x = pointer.position.x
             this.y = pointer.position.y
             
-            base.instantiateNew()
+            if(this.state == FoodItemState.INVISIBLE) {
+                base.instantiateNew()
+                this.state = FoodItemState.DRAG
+                this.setAlpha(1)
+            }
 
             if (this.currentFoodSpot !== undefined) {
                 this.currentFoodSpot.hover = true;
@@ -53,8 +56,6 @@ export class FoodItem extends Phaser.GameObjects.Image {
             this.removeFoodSpot()
             foodManager.rearrange()
 
-            this.state = FoodItemState.DRAG
-            this.setAlpha(1)
         });
 
         this.on('drag', (pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
@@ -72,8 +73,7 @@ export class FoodItem extends Phaser.GameObjects.Image {
                 this.clearTint();
             }
             // clear foodspot hover
-            foodManager.arrangement.forEach((foodSpot) => {foodSpot.hover = false})
-            console.log("dragend")
+            foodManager.arrangement[0].forEach((foodSpot) => {foodSpot.hover = false})
         });
         
         this.on("drop", (pointer: Phaser.Input.Pointer, dropZone: Phaser.GameObjects.Image) => {
@@ -93,9 +93,8 @@ export class FoodItem extends Phaser.GameObjects.Image {
             }
             
             // clear foodspot hover
-            foodManager.arrangement.forEach((foodSpot) => {foodSpot.hover = false})
+            foodManager.arrangement[0].forEach((foodSpot) => {foodSpot.hover = false})
             foodManager.rearrange()
-            console.log("drop")
         })
 
         this.on("dragenter", (pointer: Phaser.Input.Pointer, dropZone: FoodSpot) => {

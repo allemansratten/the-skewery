@@ -2,6 +2,7 @@ import 'phaser'
 
 import { levels } from '../misc/levels'
 import { MainScene } from '../scenes/main'
+import { Rule } from '../rules/rule';
 
 export class RuleManager {
 
@@ -20,13 +21,13 @@ export class RuleManager {
         backgroundBoard.setDisplaySize(250, 380)
         backgroundBoard.setAlpha(0.5)
 
-        for (let i = 0; i < 4; i++) {
-            let numberText = scene.add.text(15, 20 + i * 95, '' + (i + 1), { fontFamily: 'Kalam' })
+        for (let i = 0; i < 5; i++) {
+            let numberText = scene.add.text(15, 20 + i * 90, '' + (i + 1), { fontFamily: 'Kalam' })
             numberText.setColor('black')
             numberText.setVisible(false)
             this.numberText.push(numberText)
 
-            let ruleText = scene.add.text(31, 20 + i * 95, "", { fontFamily: 'Kalam' })
+            let ruleText = scene.add.text(31, 20 + i * 90, "", { fontFamily: 'Kalam' })
             ruleText.setColor('black')
             ruleText.setWordWrapWidth(230)
             ruleText.setVisible(false)
@@ -36,9 +37,16 @@ export class RuleManager {
     }
 
     public updateProgress(): void {
+        let atLeastOneArrangement = (rule: Rule) => {
+            for(let arrangement of this.scene.foodManager.getArrangement()) 
+                if(rule.acceptable(arrangement))
+                    return true
+            return false
+        } 
+        
         let ok = true
         for (let i = 0; i <= this.curRule; i++) {
-            if (!levels[this.curLevel].rules[i].acceptable(this.scene.foodManager.getArrangement())) {
+            if (!atLeastOneArrangement(levels[this.curLevel].rules[i])) {
                 ok = false
             }
         }
@@ -57,7 +65,7 @@ export class RuleManager {
 
             let rule = levels[this.curLevel].rules[i]
             this.ruleText[i].setText(rule.description)
-            if (rule.acceptable(this.scene.foodManager.getArrangement())) {
+            if (atLeastOneArrangement(rule)) {
                 this.numberText[i].setColor('green')
                 this.ruleText[i].setColor('green')
             } else {
