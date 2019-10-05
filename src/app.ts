@@ -2,7 +2,7 @@ import "phaser"
 import { MainScene } from './scenes/main'
 
 let gameConfig : object = {
-  title: "Spicy špízy",
+  title: "Untitled Untitled Game",
   width: 900,
   height: 450,
   parent: "game_canvas",

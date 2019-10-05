@@ -1,4 +1,6 @@
 import "phaser"
+import { AdjacencyRule } from "../rules/adjacencyRule";
+import { Ingredient } from "../misc/ingredient";
 import { FoodManager } from '../entities/food_manager'
 
 export class MainScene extends Phaser.Scene {
@@ -22,7 +24,11 @@ export class MainScene extends Phaser.Scene {
         randomitem.setFrame(0)
         // skewer.setDisplaySize(800, 80)
 
-        this.foodManager = new FoodManager(this)
+        // Rule usage examples
+        let aj = new AdjacencyRule(Ingredient.Pepper, Ingredient.Tomato)
+        console.log(aj.acceptable([Ingredient.Tomato]))
+        console.log(aj.acceptable([]))
+        console.log(aj.acceptable([Ingredient.Pepper, Ingredient.Pepper, Ingredient.Tomato]))
     }
 
     update(time: number, delta: number) {

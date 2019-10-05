@@ -1,13 +1,20 @@
 import 'phaser'
 
+import { Ingredient, Igredient2Frame } from '../misc/ingredient'
+
 class Vector2 extends Phaser.Math.Vector2 { }
 class Image extends Phaser.GameObjects.Image { }
 class Circle extends Phaser.GameObjects.Arc { }
 
 export class FoodItem extends Phaser.GameObjects.Image {
 
-    constructor(scene: Phaser.Scene, x: number, y: number) {
+    ingredient: Ingredient
+
+    constructor(scene: Phaser.Scene, x: number, y: number, ingredient: Ingredient) {
         super(scene, x, y, "ingredient");
+
+        this.setFrame(Igredient2Frame[ingredient])
+        this.ingredient = ingredient
 
         this.setInteractive()
         scene.input.setDraggable(this);

@@ -1,5 +1,6 @@
 import 'phaser'
 import { FoodItem } from '../entities/food_item'
+import { Ingredient } from '../misc/ingredient'
 
 class Vector2 extends Phaser.Math.Vector2 { }
 class Image extends Phaser.GameObjects.Image { }
@@ -15,8 +16,8 @@ export class FoodManager {
         this.scene = scene
 
         
-        let addFoodItem = (x: number, y: number): Phaser.GameObjects.Image => {
-            let food_item = new FoodItem(scene, x, y)
+        let addFoodItem = (x: number, y: number, ingredient: Ingredient): Phaser.GameObjects.Image => {
+            let food_item = new FoodItem(scene, x, y, ingredient)
             return food_item
         }
 
@@ -25,7 +26,7 @@ export class FoodManager {
         //     return object
         // }
 
-        this.block = addFoodItem(400, 100);
+        this.block = addFoodItem(400, 100, Ingredient.Onion);
         // this.ball = addBall(500, 100, 20);
     }
 
