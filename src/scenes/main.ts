@@ -1,6 +1,6 @@
 import "phaser"
 import { Ingredient } from "../misc/ingredient";
-import { FoodManager } from '../entities/food_manager'
+import { FoodManager } from '../entities/foodManager'
 import { Utils } from '../misc/utils'
 
 export class MainScene extends Phaser.Scene {
