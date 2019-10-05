@@ -13,8 +13,9 @@ export class FoodItem extends Phaser.GameObjects.Image {
         this.setFrame(Utils.ingredientNum(ingredient))
         this.ingredient = ingredient
 
-        this.setInteractive()
-        scene.input.setDraggable(this);
+        this.setInteractive({
+            draggable: true
+        })
 
         this.on('dragstart', (pointer: Phaser.Input.Pointer) => {
             this.setTint(0xff0000);
@@ -28,6 +29,11 @@ export class FoodItem extends Phaser.GameObjects.Image {
         this.on('dragend', (pointer: Phaser.Input.Pointer) => {
             this.clearTint();
         });
+
+        this.on("drop", (pointer: Phaser.Input.Pointer, dropZone: Phaser.GameObjects.Zone) => {
+            this.x = dropZone.x
+            this.y = dropZone.y
+        })
 
         scene.add.existing(this)
     }
