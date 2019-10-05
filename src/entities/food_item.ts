@@ -22,16 +22,21 @@ export class FoodItem extends Phaser.GameObjects.Image {
         super(scene, x, y, "ingredient");
 
         this.setFrame(Utils.ingredientNum(ingredient))
+        this.setDisplaySize(58, 58)
         this.ingredient = ingredient
+
+        // Random rotation (Bětka to tak chtěla)
+        this.setRotation(Math.random() * Math.PI * 2)
 
         this.setInteractive({
             draggable: true
         })
 
         this.on('dragstart', (pointer: Phaser.Input.Pointer) => {
-            this.setTint(0xff0000);
+            this.setTint(0xAAAAAA);
             this.x = pointer.position.x
             this.y = pointer.position.y
+            base.instantiateNew()
         });
 
         this.on('drag', (pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
@@ -39,9 +44,6 @@ export class FoodItem extends Phaser.GameObjects.Image {
             this.setAlpha(1)
             this.x = pointer.position.x
             this.y = pointer.position.y
-
-            // TODO: tady je leak, protože se tvoří spousta nových objektů při pohybu objektu
-            base.instantiateNew()
             
             this.removeFoodSpot()
         });

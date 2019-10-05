@@ -3,7 +3,6 @@ import { FoodItem } from '../entities/food_item'
 import { FoodSpot } from '../entities/food_spot'
 import { FoodBase } from '../entities/food_base'
 import { Ingredient, IngredientArray } from '../misc/ingredient'
-import { Utils } from '../misc/utils'
 
 export class FoodManager {
 
@@ -13,13 +12,17 @@ export class FoodManager {
 
     constructor(scene: Phaser.Scene) {
         this.scene = scene
+        let backgroundBoard = scene.add.image(0, 0, 'background_board')
+        backgroundBoard.setOrigin(0, 0)
+        backgroundBoard.setAlpha(0.3)
+        scene.add.image(565, 100, 'skewer')
 
         let addFoodSpot = (x: number, y: number): FoodSpot => {
             return new FoodSpot(scene, x, y)
         }
 
-        for (let i = 0; i < 11; i++) {
-            let foodSpot = addFoodSpot(170 + i * 55, 100)
+        for (let i = 0; i < 10; i++) {
+            let foodSpot = addFoodSpot(270 + i * 58, 170)
             this.arrangement.push(foodSpot)
         }
 

@@ -6,10 +6,10 @@ export class FoodSpot extends Phaser.GameObjects.Image {
     currentFoodItem: FoodItem
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
-        super(scene, x, y, "todo")
+        super(scene, x, y, "food_spot")
 
         this.setInteractive({ dropZone: true });
-        this.setDisplaySize(50, 50)
+        this.setDisplaySize(58, 58)
 
         // let width = 50, height = 50
         // this.zone = scene.add.zone(x, y, width, height).setRectangleDropZone(width, height);
