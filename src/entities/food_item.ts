@@ -30,13 +30,15 @@ export class FoodItem extends Phaser.GameObjects.Image {
 
         this.on('dragstart', (pointer: Phaser.Input.Pointer) => {
             this.setTint(0xff0000);
+            this.x = pointer.position.x
+            this.y = pointer.position.y
         });
 
         this.on('drag', (pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
             this.state = FoodItemState.DRAG
             this.setAlpha(1)
-            this.x = dragX
-            this.y = dragY
+            this.x = pointer.position.x
+            this.y = pointer.position.y
 
             // TODO: tady je leak, protože se tvoří spousta nových objektů při pohybu objektu
             base.instantiateNew()

@@ -14,6 +14,7 @@ export class FoodSpot extends Phaser.GameObjects.Image {
         super(scene, x, y, "todo")
 
         this.setInteractive({ dropZone: true });
+        this.setDisplaySize(50, 50)
 
         // let width = 50, height = 50
         // this.zone = scene.add.zone(x, y, width, height).setRectangleDropZone(width, height);
