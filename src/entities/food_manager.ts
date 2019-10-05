@@ -3,39 +3,67 @@ import { FoodItem } from '../entities/food_item'
 import { FoodSpot } from '../entities/food_spot'
 import { FoodBase } from '../entities/food_base'
 import { Ingredient, IngredientArray } from '../misc/ingredient'
-import { Utils } from '../misc/utils'
 
 export class FoodManager {
 
     scene: Phaser.Scene
-    skewer: FoodSpot[] = new Array<FoodSpot>()
+    arrangement: FoodSpot[] = new Array<FoodSpot>()
 
 
     constructor(scene: Phaser.Scene) {
         this.scene = scene
+        let backgroundBoard = scene.add.image(0, 0, 'background_board')
+        backgroundBoard.setOrigin(0, 0)
+        backgroundBoard.setAlpha(0.3)
+        scene.add.image(565, 100, 'skewer')
 
-        let addFoodSpot = (x: number, y: number): FoodSpot => {
-            return new FoodSpot(scene, x, y)
+        // Instantiate food spots
+        for (let i = 0; i < 10; i++) {
+            this.arrangement.push(new FoodSpot(scene, 295 + i * 55, 170))
         }
 
-        for (let i = 0; i < 11; i++) {
-            let foodSpot = addFoodSpot(170 + i * 55, 100)
-            this.skewer.push(foodSpot)
-        }
-
-        let addFoodBase = (x: number, y: number, ingredient: Ingredient): Phaser.GameObjects.Image => {
-            let foodBase = new FoodBase(scene, x, y, ingredient)
-            return foodBase
-        }
-        
+        // Instantiate food bases
         let i = 0
         for(let ingredient of IngredientArray) {
-            addFoodBase(400+i, 400, ingredient)
+            new FoodBase(scene, 400+i, 350, ingredient)
             i += 64
         }
+
+        let checkArrangementButton = scene.add.image(250, 50, 'eye').setInteractive();
+        checkArrangementButton.on('pointerup', (pointer) => {
+            this.rearrange()
+        })
     }
 
-    update(time: number, delta: number) {
+    update(time: number, delta: number) { }
 
+    getArrangement() {
+        let ingredientArrangement = new Array<Ingredient>()
+
+        for(let spot of this.arrangement) {
+            if (spot.currentFoodItem !== undefined){
+                ingredientArrangement.push(spot.currentFoodItem.ingredient)
+            }
+        }
+
+        return ingredientArrangement
+    }
+
+    rearrange() {
+        let foodItems = new Array<FoodItem>()
+        for (let spot of this.arrangement) {
+            if (spot.currentFoodItem !== undefined) {
+                foodItems.push(spot.currentFoodItem)
+                spot.currentFoodItem.currentFoodSpot = undefined
+            }
+            spot.currentFoodItem = undefined
+        }
+        let startIndex: number = (this.arrangement.length - foodItems.length)/2
+        startIndex = Math.floor(startIndex)
+        for (let i = 0; i < foodItems.length; i++){
+            let foodItem = foodItems[i]
+            let foodSpot = this.arrangement[startIndex+i]
+            foodItem.dropToFoodSpot(foodSpot)
+        }
     }
 }

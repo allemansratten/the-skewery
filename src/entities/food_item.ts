@@ -22,31 +22,31 @@ export class FoodItem extends Phaser.GameObjects.Image {
         super(scene, x, y, "ingredient");
 
         this.setFrame(Utils.ingredientNum(ingredient))
+        this.setDisplaySize(58, 58)
         this.ingredient = ingredient
+
+        // Random rotation (Bětka to tak chtěla)
+        this.setRotation(Math.random() * Math.PI * 2)
 
         this.setInteractive({
             draggable: true
         })
 
         this.on('dragstart', (pointer: Phaser.Input.Pointer) => {
-            this.setTint(0xff0000);
+            this.setTint(0xAAAAAA);
             this.x = pointer.position.x
             this.y = pointer.position.y
+            
+            base.instantiateNew()
+            this.state = FoodItemState.DRAG
+            this.setAlpha(1)
         });
 
         this.on('drag', (pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
-            this.state = FoodItemState.DRAG
-            this.setAlpha(1)
             this.x = pointer.position.x
             this.y = pointer.position.y
-
-            // TODO: tady je leak, protože se tvoří spousta nových objektů při pohybu objektu
-            base.instantiateNew()
             
-            if (this.currentFoodSpot !== undefined) {
-                this.currentFoodSpot.currentFoodItem = undefined
-                this.currentFoodSpot = undefined
-            }
+            this.removeFoodSpot()
         });
 
         this.on('dragend', (pointer: Phaser.Input.Pointer) => {
@@ -55,15 +55,25 @@ export class FoodItem extends Phaser.GameObjects.Image {
         });
 
         this.on("drop", (pointer: Phaser.Input.Pointer, dropZone: FoodSpot) => {
-            this.x = dropZone.x
-            this.y = dropZone.y
-
-            this.currentFoodSpot = dropZone
-
-            dropZone.currentFoodItem = this
+            this.dropToFoodSpot(dropZone)
         })
         this.setAlpha(0.1)
 
         scene.add.existing(this)
+    }
+
+    public dropToFoodSpot (foodSpot: FoodSpot) {
+        this.x = foodSpot.x
+        this.y = foodSpot.y
+
+        this.currentFoodSpot = foodSpot
+        foodSpot.currentFoodItem = this
+    }
+
+    public removeFoodSpot () {
+        if (this.currentFoodSpot !== undefined) {
+            this.currentFoodSpot.currentFoodItem = undefined
+            this.currentFoodSpot = undefined
+        }
     }
 }
