@@ -1,4 +1,4 @@
-import { Ingredient, Igredient2Frame } from './ingredient'
+import { Ingredient } from './ingredient'
 
 export class Utils {
     // @deprecated

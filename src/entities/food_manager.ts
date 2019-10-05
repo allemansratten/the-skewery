@@ -1,5 +1,5 @@
 import 'phaser'
-import { Ingredient, Igredient2Frame } from '../misc/ingredient'
+import { Ingredient, Ingredient2Frame } from '../misc/ingredient'
 
 class Vector2 extends Phaser.Math.Vector2 { }
 class Image extends Phaser.GameObjects.Image { }
@@ -31,25 +31,30 @@ export class FoodManager {
         
         let addFoodItem = (x: number, y: number, ingredient: Ingredient): Phaser.GameObjects.Image => {
             let food_item = scene.add.image(x, y, "ingredient").setInteractive();
-            food_item.setFrame(Igredient2Frame[ingredient])
+            food_item.setFrame(Ingredient2Frame[ingredient])
             food_item.setDataEnabled()
-            food_item.setData("ingredient", ingredient) // TODO: add ingredient enum
+            food_item.setData("ingredient", ingredient)
 
             scene.input.setDraggable(food_item);
 
             return food_item
         }
 
-        // let addBall = (x: number, y: number, r: number): Circle => {
-        //     let object = scene.add.circle(x, y, r, 0xff0000)
-        //     return object
-        // }
+        let addFoodBase = (x: number, y: number, ingredient: Ingredient): Phaser.GameObjects.Image => {
+            let food_item = scene.add.image(x, y, "ingredient_base")
+            food_item.setFrame(Ingredient2Frame[ingredient])
+            food_item.setDataEnabled()
+            food_item.setData("ingredient", ingredient)
+
+            return food_item
+        }
 
         this.block = addFoodItem(400, 100, Ingredient.Onion);
-        // this.ball = addBall(500, 100, 20);
+
+        addFoodBase(400, 400, Ingredient.Pepper)
     }
 
     update(time: number, delta: number) {
-        this.ball.setPosition(this.ball.getCenter().x, this.ball.getCenter().y+delta*0.1)
+
     }
 }
