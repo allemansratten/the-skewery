@@ -1,5 +1,5 @@
 import { Rule } from './rule'
-import { Ingredient } from '../ingredient'
+import { Ingredient } from '../misc/ingredient'
 
 export class AdjacencyRule implements Rule {
 

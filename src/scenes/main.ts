@@ -1,6 +1,6 @@
 import "phaser"
 import { AdjacencyRule } from "../rules/adjacencyRule";
-import { Ingredient } from "../ingredient";
+import { Ingredient } from "../misc/ingredient";
 import { FoodManager } from '../entities/food_manager'
 
 export class MainScene extends Phaser.Scene {
