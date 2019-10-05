@@ -6,7 +6,7 @@ export class RegExpEvent implements RuleEvent {
     private regExp: RegExp
 
     constructor(private regExpString : string) {
-        this.regExp = new RegExp(this.regExp, 'g')
+        this.regExp = new RegExp(regExpString, 'g')
     }
 
     count(arr : Ingredient[]) : number {

@@ -5,8 +5,6 @@ import { FoodBase } from './foodBase'
 import { Skewer } from './skewer'
 import { MainScene } from '../scenes/main'
 import { Ingredient, IngredientArray } from '../misc/ingredient'
-import { Utils } from '../misc/utils'
-import { ingredientCharMapping } from '../rules/regExpEvent'
 
 export class FoodManager {
 
