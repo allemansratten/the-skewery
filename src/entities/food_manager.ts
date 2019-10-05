@@ -21,13 +21,13 @@ export class FoodManager {
             return new FoodSpot(scene, x, y)
         }
 
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 4; i++) {
             let foodSpot = addFoodSpot(270 + i * 58, 170)
             this.arrangement.push(foodSpot)
         }
 
         let addFoodBase = (x: number, y: number, ingredient: Ingredient): Phaser.GameObjects.Image => {
-            let foodBase = new FoodBase(scene, x, y, ingredient)
+            let foodBase = new FoodBase(scene, x, y, ingredient, this)
             return foodBase
         }
         
@@ -36,7 +36,6 @@ export class FoodManager {
             addFoodBase(400+i, 400, ingredient)
             i += 64
         }
-
 
         let checkArrangementButton = scene.add.image(50, 50, 'eye').setInteractive();
         checkArrangementButton.on('pointerup', (pointer) => {
@@ -63,19 +62,32 @@ export class FoodManager {
 
     rearrange() {
         let foodItems = new Array<FoodItem>()
+        // get all items
         for (let spot of this.arrangement) {
             if (spot.currentFoodItem !== undefined) {
                 foodItems.push(spot.currentFoodItem)
-                spot.currentFoodItem.currentFoodSpot = undefined
             }
-            spot.currentFoodItem = undefined
         }
-        let startIndex: number = (this.arrangement.length - foodItems.length)/2
-        startIndex = Math.floor(startIndex)
-        for (let i = 0; i < foodItems.length; i++){
-            let foodItem = foodItems[i]
-            let foodSpot = this.arrangement[startIndex+i]
-            foodItem.dropToFoodSpot(foodSpot)
+
+        console.log(foodItems.length)
+        if (foodItems.length !== this.arrangement.length) {
+            // reset all spots
+            for (let spot of this.arrangement) {
+                if (spot.currentFoodItem !== undefined) {
+                    spot.currentFoodItem.currentFoodSpot = undefined
+                }
+                spot.currentFoodItem = undefined
+            }
+
+            // find new spots
+            let filteredArrangement = this.arrangement.filter((foodSpot) => !foodSpot.hover)
+            let startIndex: number = (filteredArrangement.length - foodItems.length)/2
+            startIndex = Math.floor(startIndex)
+            for (let i = 0; i < foodItems.length; i++){
+                let foodItem = foodItems[i]
+                let foodSpot = filteredArrangement[startIndex+i]
+                foodItem.dropToFoodSpot(foodSpot)
+            }
         }
     }
 }

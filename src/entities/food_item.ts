@@ -1,6 +1,7 @@
 import 'phaser'
 
 import { FoodBase } from './food_base'
+import { FoodManager } from './food_manager'
 import { Ingredient } from '../misc/ingredient'
 import { Utils } from '../misc/utils'
 import { FoodSpot } from './food_spot'
@@ -18,7 +19,7 @@ export class FoodItem extends Phaser.GameObjects.Image {
     state: FoodItemState = FoodItemState.INVISIBLE
     currentFoodSpot: FoodSpot
 
-    constructor(scene: Phaser.Scene, x: number, y: number, ingredient: Ingredient, base: FoodBase) {
+    constructor(scene: Phaser.Scene, x: number, y: number, ingredient: Ingredient, base: FoodBase, foodManager: FoodManager) {
         super(scene, x, y, "ingredient");
 
         this.setFrame(Utils.ingredientNum(ingredient))
@@ -37,6 +38,12 @@ export class FoodItem extends Phaser.GameObjects.Image {
             this.x = pointer.position.x
             this.y = pointer.position.y
             base.instantiateNew()
+
+            if (this.currentFoodSpot !== undefined) {
+                this.currentFoodSpot.hover = true;
+            }
+            this.removeFoodSpot()
+            foodManager.rearrange()
         });
 
         this.on('drag', (pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
@@ -44,29 +51,51 @@ export class FoodItem extends Phaser.GameObjects.Image {
             this.setAlpha(1)
             this.x = pointer.position.x
             this.y = pointer.position.y
-            
-            this.removeFoodSpot()
         });
 
         this.on('dragend', (pointer: Phaser.Input.Pointer) => {
             this.state = FoodItemState.PLACED
             this.clearTint();
-        });
 
+            // clear hover
+            foodManager.arrangement.forEach((foodSpot) => {foodSpot.hover = false})
+        });
+        
         this.on("drop", (pointer: Phaser.Input.Pointer, dropZone: FoodSpot) => {
             this.dropToFoodSpot(dropZone)
+            
+            // clear hover
+            foodManager.arrangement.forEach((foodSpot) => {foodSpot.hover = false})
+            foodManager.rearrange()
         })
+
+        this.on("dragenter", (pointer: Phaser.Input.Pointer, dropZone: FoodSpot) => {
+            dropZone.hover = true
+            
+            foodManager.rearrange()
+        })
+        this.on("dragleave", (pointer: Phaser.Input.Pointer, dropZone: FoodSpot) => {
+            dropZone.hover = false
+
+            foodManager.rearrange()
+        })
+
         this.setAlpha(0.1)
 
         scene.add.existing(this)
     }
 
     public dropToFoodSpot (foodSpot: FoodSpot) {
-        this.x = foodSpot.x
-        this.y = foodSpot.y
-
-        this.currentFoodSpot = foodSpot
-        foodSpot.currentFoodItem = this
+        if (foodSpot.isFree()){
+            this.x = foodSpot.x
+            this.y = foodSpot.y
+    
+            this.currentFoodSpot = foodSpot
+            foodSpot.currentFoodItem = this
+        }
+        else {
+            // TODO remove the food item
+        }
     }
 
     public removeFoodSpot () {

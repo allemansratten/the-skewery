@@ -4,6 +4,7 @@ import { FoodItem } from './food_item'
 export class FoodSpot extends Phaser.GameObjects.Image {
     zone: Phaser.GameObjects.Zone
     currentFoodItem: FoodItem
+    hover: boolean
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
         super(scene, x, y, "food_spot")
