@@ -26,8 +26,7 @@ export class FoodManager {
         }
         
         let i = 0
-        for(let ingredient in IngredientArray) {
-            // @ts-ignore
+        for(let ingredient of IngredientArray) {
             addFoodBase(400+i, 400, ingredient)
             i += 64
         }

@@ -1,11 +1,6 @@
 import 'phaser'
 import { FoodItem } from './food_item'
 
-
-class Vector2 extends Phaser.Math.Vector2 { }
-class Image extends Phaser.GameObjects.Image { }
-class Circle extends Phaser.GameObjects.Arc { }
-
 export class FoodSpot extends Phaser.GameObjects.Image {
     zone: Phaser.GameObjects.Zone
     currentFoodItem: FoodItem
@@ -14,7 +9,6 @@ export class FoodSpot extends Phaser.GameObjects.Image {
         super(scene, x, y, "todo")
 
         this.setInteractive({ dropZone: true });
-
         // let width = 50, height = 50
         // this.zone = scene.add.zone(x, y, width, height).setRectangleDropZone(width, height);
 
