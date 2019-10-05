@@ -11,19 +11,10 @@ export class FoodManager {
     constructor(scene: Phaser.Scene) {
         this.scene = scene
 
-        
-        let addFoodItem = (x: number, y: number, ingredient: Ingredient): Phaser.GameObjects.Image => {
-            let foodItem = new FoodItem(scene, x, y, ingredient)
-            return foodItem
-        }
-        
         let addFoodBase = (x: number, y: number, ingredient: Ingredient): Phaser.GameObjects.Image => {
             let foodBase = new FoodBase(scene, x, y, ingredient)
             return foodBase
-
         }
-        
-        addFoodItem(400, 100, Ingredient.Onion)
         
         let i = 0
         for(let ingredient in IngredientArray) {
