@@ -40,29 +40,32 @@ export class RuleManager {
         this.updateProgress()
     }
 
-    private initLevel(): void {
-        let reset = () => {
-            let level = levels[this.curLevel]
-            if (level.skewers == 1) {
-                this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 140))
-            } else {
-                this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 10))
-                this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 170))
-            }
+    private reset(): void {
+        let level = levels[this.curLevel]
+        if (level.skewers == 1) {
+            this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 140))
+        } else {
+            this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 10))
+            this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 170))
         }
+    }
 
-        if(this.scene.foodManager.skewers.length > 0) {
-            if(this.scene.foodManager.skewers.length > 1) {
-                this.scene.foodManager.skewers[1].die(() => {})
-            }
-            let tween = this.scene.foodManager.skewers[0].die(() => {
-                reset()
-            })
-            
+    private impale(callback: () => void): void {
+        if (this.scene.foodManager.skewers.length > 1) {
+            this.scene.foodManager.skewers[1].die(() => { })
+        }
+        let tween = this.scene.foodManager.skewers[0].die(() => {
+            callback()
+        })
+    }
+
+    private initLevel(): void {
+        if (this.scene.foodManager.skewers.length > 0) {
+            this.impale(() => { this.reset() })
             this.scene.foodManager.arrangement = new Array<Array<FoodSpot>>()
             this.scene.foodManager.skewers = new Array<Skewer>()
         } else {
-            reset()
+            this.reset()
         }
 
     }
@@ -90,6 +93,9 @@ export class RuleManager {
 
         if (good == levels[this.curLevel].rules.length) {
             if (this.curLevel == levels.length - 1) {
+                this.impale(() => {
+                    console.error('done, TODO: transition to outro')
+                })
             } else {
                 this.curLevel += 1
                 this.initLevel()
