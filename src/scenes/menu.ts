@@ -16,6 +16,7 @@ export class MenuScene extends Phaser.Scene {
         background.setOrigin(0, 0)
         background.setInteractive({ useHandCursor: true })
         background.on('pointerup', () => { 
+            background.off('pointerup')
             this.add.tween({
                 targets: background,
                 alpha: 0,
