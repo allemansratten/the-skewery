@@ -135,8 +135,10 @@ export let levels: Level[] = [
     new Level([
         new OccurrenceRule(new RegExpEvent('^p.*p$'), 1, 1,
             "must have a pepper on both edges"),
-        new OccurrenceRule(new RegExpEvent('[^o]p[^o]'), 0, 0,
-            "peppers must be adjacent to onions on both sides"),
+        new CompareOccurencesRule(
+            new RegExpEvent('p'), new RegExpEvent('opo'), (x, y) => { return x === y },
+            "peppers must be adjacent to onions on both sides"
+        ),
         new OccurrenceRule(new RegExpEvent('^(tt|ee|pp|oo)*$'), 1, 1,
             "ingredients form pairs (each item must be adjacent to exactly one item of the same ingredient)"),
         new CompositeRule([
