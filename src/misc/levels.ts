@@ -30,7 +30,7 @@ export let levels: Level[] = [
         new OccurrenceRule(new RegExpEvent("tp"), 1, undefined,
             "must contain a tomato followed by pepper"),
     ], 2),
-    // TODO cca 10-15 levelů, podle toho co zvládne Vašek
+    // Prvni vygenerovana uloha
     new Level([
         new OccurrenceRule(new RegExpEvent('o'), 2, undefined, "at least two onions"),
         new CompositeRule([
@@ -46,6 +46,7 @@ export let levels: Level[] = [
         new OccurrenceRule(new RegExpEvent('.'), 0, 2,
             "must be at most two items"),
     ], 2, 4),
+    // Prvni rucne udelana uloha
     new Level([
         new CompositeRule([
             new OccurrenceRule(new RegExpEvent('....'), undefined, 0),
@@ -70,11 +71,23 @@ export let levels: Level[] = [
             new OccurrenceRule(new RegExpEvent('e'), 1, undefined),
         ], "must be a palindrome of an odd length containing an eggplant"),
     ], 2, 5),
+    // Sachova uloha 1
     new Level([
-        new OccurrenceRule(new RegExpEvent("t"), 2, undefined,
-            "must have at least two tomatoes"),
-        new OccurrenceRule(new RegExpEvent("tt"), undefined, 0,
-            "must not have two consecutive tomatoes"),
-    ], 1),
+        new OccurrenceRule(new RegExpEvent('^p.*p$'), 1, 1,
+            "must have a pepper on both edges"),
+        new OccurrenceRule(new RegExpEvent('[^o]p[^o]'), 0, 0,
+            "peppers must be adjacent to onions on both sides"),
+        new OccurrenceRule(new RegExpEvent('^(tt|ee|pp|oo)*$'), 1, 1,
+            "ingredients form pairs (each item must be adjacent to exactly one item of the same ingredient)"),
+        new CompositeRule([
+            new OccurrenceRule(new RegExpEvent('.'), 3, 3),
+            new OccurrenceRule(new UniqueIngredientsEvent(), 3, 3),
+        ], "must have exactly three items and their ingredients must all be different"),
+        new CompositeRule([
+            new OccurrenceRule(new RegExpEvent('(^|[^e])t($|[^e])'), undefined, 0),
+            new OccurrenceRule(new RegExpEvent('ete'), undefined, 0),
+        ], "each tomato must be adjacent to exactly one eggplant"),
+    ], 2, 4),
+    // Dummy uloha na konci (technicke duvody)
     new Level([], 0),
 ]
