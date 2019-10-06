@@ -35,6 +35,14 @@ export class RuleManager {
         }
 
         this.levelText = scene.add.text(840, 340, '', { fontFamily: 'Kalam', color: 'black', fontSize: '3.2em' })
+        // DEBUG ONLY
+        if(window.location.href.indexOf('127.0.0.1') != 0) {
+            this.levelText.setInteractive({})
+            this.levelText.on('pointerup', () => {
+                this.curLevel += 1
+                this.initLevel()
+            })
+        }
 
         this.initLevel()
         this.updateProgress()
@@ -56,10 +64,10 @@ export class RuleManager {
             text.setText('')
         }
         if (level.skewers == 1) {
-            this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 140))
+            this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 140, level))
         } else {
-            this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 10))
-            this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 170))
+            this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 10, level))
+            this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 170, level))
         }
     }
 

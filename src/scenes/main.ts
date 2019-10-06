@@ -48,11 +48,12 @@ export class MainScene extends Phaser.Scene {
         this.foodManager = new FoodManager(this)
         this.ruleManager = new RuleManager(this)
 
+        this.sound.volume = 0.2;
         let music = this.sound.add('kebab_music', {
             loop: true,
             volume: 0.5
         });
-        // music.play()
+        music.play()
     }
 
     update(time: number, delta: number) {
