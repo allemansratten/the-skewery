@@ -6,7 +6,7 @@ import { PalindromeEvent } from "../rules/palindromeEvent"
 import { UniqueIngredientsEvent } from "../rules/uniqueIngredientsEvent"
 
 
-export let levels : Level[] = [
+export let levels: Level[] = [
     // Uvodni, seznami hrace s prvky na obrazovce
     new Level([
         new OccurrenceRule(new RegExpEvent("t"), 1, undefined,
@@ -21,6 +21,15 @@ export let levels : Level[] = [
         new OccurrenceRule(new RegExpEvent("tt"), undefined, 0,
             "must not have two consecutive tomatoes"),
     ], 1),
+    // Uvodni pro dva spizy, vysvetluje, ze staci splneni na alespon jednom
+    new Level([
+        new OccurrenceRule(new RegExpEvent("o"), 2, undefined,
+            "must have at least two onions"),
+        new OccurrenceRule(new RegExpEvent("o"), 1, 1,
+            "must have exactly one onion"),
+        new OccurrenceRule(new RegExpEvent("tp"), 1, undefined,
+            "must contain a tomato followed by pepper"),
+    ], 2),
     // TODO cca 10-15 levelů, podle toho co zvládne Vašek
     new Level([
         new OccurrenceRule(new RegExpEvent('o'), 2, undefined, "at least two onions"),
