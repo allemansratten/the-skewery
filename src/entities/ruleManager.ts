@@ -25,7 +25,7 @@ export class RuleManager {
         backgroundBoard.setAlpha(1)
 
         for (let i = 0; i < this.TOTAL_BOXES; i++) {
-            let numberText = scene.add.text(7, 20 + i * 81, '' + (i + 1), { fontFamily: 'Kalam', color: 'black' })
+            let numberText = scene.add.text(7, 20 + i * 81, (i + 1) + ".", { fontFamily: 'Kalam', color: 'black' })
             this.numberText.push(numberText)
 
             let ruleText = scene.add.text(23, 20 + i * 81, "", { fontFamily: 'Kalam', color: 'black' })
@@ -147,7 +147,9 @@ export class RuleManager {
 
         for (let i = 0; i < levels[this.curLevel].rules.length; i++) {
             let rule = levels[this.curLevel].rules[i]
-            this.ruleText[i].setText(rule.description)
+            let description = rule.description
+            description = description.charAt(0).toUpperCase() + description.slice(1)
+            this.ruleText[i].setText(description)
             if (atLeastOneArrangement(rule)) {
                 this.numberText[i].setColor('#119900')
                 this.ruleText[i].setColor('#119900')

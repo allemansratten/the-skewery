@@ -1,3 +1,4 @@
 node_modules/*
 dist/assets/skewer.png.kra
 dist/assets/skewer.png~
+dist/app.js
