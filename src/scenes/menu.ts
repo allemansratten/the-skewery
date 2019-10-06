@@ -19,7 +19,7 @@ export class MenuScene extends Phaser.Scene {
             this.add.tween({
                 targets: background,
                 alpha: 0,
-                duration: 700,
+                duration: 500,
                 onComplete: () => {
                     this.game.scene.start('MainScene')
                 }

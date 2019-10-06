@@ -31,7 +31,7 @@ export class MainScene extends Phaser.Scene {
         this.add.tween({
             targets: transitionRectangle,
             alpha: 0,
-            duration: 700,
+            duration: 500,
             onComplete: () => {
                 transitionRectangle.destroy(true)
             }
