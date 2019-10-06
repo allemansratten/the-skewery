@@ -15,7 +15,6 @@ export class CompareOccurencesRule implements Rule {
         this.description = description
     }
 
-    // Returns 1 for palindromes, 0 for non-palindromes
     acceptable(arrangement: Ingredient[]): boolean {
         let occ1 = this.event1.count(arrangement)
         let occ2 = this.event2.count(arrangement)
