@@ -42,8 +42,8 @@ export class OutroScene extends Phaser.Scene {
             // permanent rotation
             this.add.tween({
                 targets: ingredient,
-                rotation: 7 * Math.PI * 2,
-                duration: 10000,
+                rotation: 8 * Math.PI * 2,
+                duration: 12000,
             })
 
             return ingredient

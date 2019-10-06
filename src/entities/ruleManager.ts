@@ -35,7 +35,7 @@ export class RuleManager {
 
         this.levelText = scene.add.text(840, 340, '', { fontFamily: 'Kalam', color: 'black', fontSize: '3.2em' })
         // DEBUG ONLY
-        if(window.location.href.indexOf('127.0.0.1') != 0) {
+        if (window.location.href.indexOf('127.0.0.1') != 0) {
             this.levelText.setInteractive({})
             this.levelText.on('pointerup', () => {
                 this.curLevel += 1
@@ -44,16 +44,19 @@ export class RuleManager {
         }
 
         this.initLevel()
-        this.updateProgress()
 
-        // let progressRefresher = () => {
-        //     setTimeout(progressRefresher, 300)
-            this.updateProgress()
-        // }
-        // progressRefresher()
+        let progressRefresher = () => {
+            if (this.curLevel < levels.length - 1) {
+                this.updateProgress()
+                setTimeout(progressRefresher, 300)
+            }
+        }
+        progressRefresher()
     }
 
     private reset(): void {
+        if (this.curLevel >= levels.length - 1)
+            return
         let level = levels[this.curLevel]
         for (let text of this.numberText) {
             text.setColor('black')
@@ -76,7 +79,9 @@ export class RuleManager {
         }
         let tween = this.scene.foodManager.skewers[0].die(() => {
             callback()
-            this.updateProgress()
+            if (this.curLevel < levels.length - 2) {
+                this.updateProgress()
+            }
         })
     }
 
@@ -91,6 +96,9 @@ export class RuleManager {
     }
 
     public updateProgress(): void {
+        if (this.curLevel >= levels.length)
+            return
+
         let atLeastOneArrangement = (rule: Rule): boolean => {
             for (let arrangement of this.scene.foodManager.getArrangement()) {
                 if (rule.acceptable(arrangement))
@@ -127,11 +135,15 @@ export class RuleManager {
                         }
                     })
                 })
+                this.curLevel += 1
             } else {
                 this.curLevel += 1
                 this.initLevel()
             }
         }
+
+        if (this.curLevel >= levels.length)
+            return
 
         for (let i = 0; i < levels[this.curLevel].rules.length; i++) {
             let rule = levels[this.curLevel].rules[i]
@@ -144,6 +156,6 @@ export class RuleManager {
                 this.ruleText[i].setColor('#AA1111')
             }
         }
-        this.levelText.setText((this.curLevel + 1) + '/' + (levels.length - 1))
+        this.levelText.setText(Math.min(this.curLevel + 1, levels.length - 1) + '/' + (levels.length - 1))
     }
 }
