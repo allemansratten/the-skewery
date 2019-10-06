@@ -5,7 +5,7 @@ import { CompositeRule } from "../rules/compositeRule"
 import { CompareOccurencesRule } from "../rules/compareOccurencesRule"
 import { PalindromeEvent } from "../rules/palindromeEvent"
 import { UniqueIngredientsEvent } from "../rules/uniqueIngredientsEvent"
-
+import { CompareOccurencesRule } from "../rules/compareOccurencesRule"
 
 export let levels: Level[] = [
     new Level([
@@ -40,10 +40,10 @@ export let levels: Level[] = [
         new OccurrenceRule(new RegExpEvent("tt"), undefined, 0,
             "must not have two consecutive tomatoes"),
     ], 1),
-    // Náročné na pochopení
+    // Zbytecne dlouha formulace, ale lehka uloha
     new Level([
         new CompositeRule([
-            new OccurrenceRule(new RegExpEvent("^e$|[po]e$|^e[po]"), undefined, 0),
+            new OccurrenceRule(new RegExpEvent("^e$|[poe]e$|^e[epo]"), undefined, 0),
         ], "all eggplants must be adjacent to a tomato"),
         new OccurrenceRule(new RegExpEvent("etp|pte|^..e..$|^e$|^.e.$"), 1, undefined,
             "must contain a tomato next to a pepper and eggplant, unless there exist an eggplant in the middle"),
@@ -121,6 +121,56 @@ export let levels: Level[] = [
             new OccurrenceRule(new RegExpEvent('ete'), undefined, 0),
         ], "each tomato must be adjacent to exactly one eggplant"),
     ], 2, 4),
+    // Sachova uloha 2 (WIP)
+    new Level([
+        new OccurrenceRule(new RegExpEvent('pet'), 1, undefined,
+            'must contain the sequence "pepper - eggplant - tomato"'),
+        new OccurrenceRule(new RegExpEvent('^p|p$'), 1, undefined,
+            'must have a pepper on at least one of the edges'),
+        new OccurrenceRule(new RegExpEvent('op|po'), 1, undefined,
+            "there must be a pepper which is adjacent to an onion"),
+        new OccurrenceRule(new RegExpEvent('^(tt|ee|pp|oo)*$'), 1, 1,
+            "ingredients form pairs (each item must be adjacent to exactly one item of the same ingredient)"),
+        new CompositeRule([
+            new OccurrenceRule(new RegExpEvent('.'), 3, 3),
+            new OccurrenceRule(new UniqueIngredientsEvent(), 3, 3),
+        ], "must have exactly three items and their ingredients must all be different"),
+        new CompositeRule([
+            new OccurrenceRule(new RegExpEvent('(^|[^e])t($|[^e])'), undefined, 0),
+            new OccurrenceRule(new RegExpEvent('ete'), undefined, 0),
+        ], "each tomato must be adjacent to exactly one eggplant"),
+    ], 2, 4),
+    // Sachova uloha 3 (WIP)
+    // new Level([
+    //     new OccurrenceRule(new RegExpEvent('^p.*p$'), 1, 1,
+    //         "must have a pepper on both edges"),
+    //     new OccurrenceRule(new RegExpEvent('[^o]p[^o]'), 0, 0,
+    //         "peppers must be adjacent to onions on both sides"),
+    //     new OccurrenceRule(new RegExpEvent('^(tt|ee|pp|oo)*$'), 1, 1,
+    //         "ingredients form pairs (each item must be adjacent to exactly one item of the same ingredient)"),
+    //     new CompositeRule([
+    //         new OccurrenceRule(new RegExpEvent('.'), 3, 3),
+    //         new OccurrenceRule(new UniqueIngredientsEvent(), 3, 3),
+    //     ], "must have exactly three items and their ingredients must all be different"),
+    //     new CompositeRule([
+    //         new OccurrenceRule(new RegExpEvent('(^|[^e])t($|[^e])'), undefined, 0),
+    //         new OccurrenceRule(new RegExpEvent('ete'), undefined, 0),
+    //     ], "each tomato must be adjacent to exactly one eggplant"),
+    // ], 2, 4),
+    // Sachova uloha 4
+    new Level([
+        new OccurrenceRule(new RegExpEvent('^p$|^p[otp]|[otp]p$|[otp]p[otp]'), undefined, 0,
+            "all peppers must be adjacent to an eggplant"),
+        new OccurrenceRule(new RegExpEvent('^e|e$'), undefined, 0,
+            "eggplants must not be on the edge"),
+        new OccurrenceRule(new RegExpEvent('t'), undefined, 0,
+            "tomatoes are not allowed"),
+        new CompareOccurencesRule(
+            new RegExpEvent('p'), new RegExpEvent('o'), (x, y) => { return x > y },
+            "there are more peppers than onions"),
+        new OccurrenceRule(new RegExpEvent('oo|tt|pp|ee'), undefined, 0,
+            "no ingredient is adjacent to the one of the same type"),
+    ], 1, 4),
     // Dummy uloha na konci (technicke duvody)
     new Level([], 0),
 ]

@@ -28,8 +28,8 @@ function shuffle(array : any[]) {
     return array
 }
 
-const MIN_SIZE = 3
-const MAX_SIZE = 7
+const _MIN_SIZE = {"vasek": 1, "jirka": 3}
+const _MAX_SIZE = {"vasek": 4, "jirka": 7}
 const MAX_N_RULES = 4
 
 let _rulesToTry = {
@@ -42,18 +42,16 @@ let _rulesToTry = {
             "must be a palindrome (stays the same when reversed)"),
         new OccurrenceRule(new PalindromeEvent(), 0, 0,
             "must not be a palindrome (palindrome = stays the same when reversed)"),
-        new OccurrenceRule(new RegExpEvent('e'), undefined, 0,
-            "must not contain eggplant"),
-        new OccurrenceRule(new RegExpEvent('t'), undefined, 0,
-            "must not contain tomatoes"),
+        // new OccurrenceRule(new RegExpEvent('e'), undefined, 0,
+        //     "must not contain eggplant"),
+        // new OccurrenceRule(new RegExpEvent('t'), undefined, 0,
+        //     "must not contain tomatoes"),
         // new OccurrenceRule(new RegExpEvent('.'), 0, 2,
         //     "must be at most two items"),
         new OccurrenceRule(new RegExpEvent('.'), 0, 3,
             "must be at most three items"),
         new OccurrenceRule(new RegExpEvent('.'), 4, undefined,
             "must be at least four items"),
-        // Rules from an example level
-
         // More rules
         new OccurrenceRule(new RegExpEvent('p|o'), undefined, 0,
             "must contain neither peppers nor onions"),
@@ -70,11 +68,11 @@ let _rulesToTry = {
             new OccurrenceRule(new PalindromeEvent(), 1, undefined),
             new OccurrenceRule(new RegExpEvent('^(..)*$'), 1, undefined),
         ], "must be a palindrome of an even length"),
-        new CompositeRule([
-            new OccurrenceRule(new RegExpEvent('e'), 1, undefined),
-            new OccurrenceRule(new RegExpEvent('p'), 1, undefined),
-            new OccurrenceRule(new RegExpEvent('p.*e'), undefined, 0)
-        ], "must contain an eggplant and a pepper, and each eggplant must be to the left of all peppers"),
+        // new CompositeRule([
+        //     new OccurrenceRule(new RegExpEvent('e'), 1, undefined),
+        //     new OccurrenceRule(new RegExpEvent('p'), 1, undefined),
+        //     new OccurrenceRule(new RegExpEvent('p.*e'), undefined, 0)
+        // ], "must contain an eggplant and a pepper, and each eggplant must be to the left of all peppers"),
         new CompositeRule([
             new OccurrenceRule(new RegExpEvent('o'), 1, undefined),
             new OccurrenceRule(new RegExpEvent('t'), 1, undefined),
@@ -88,11 +86,33 @@ let _rulesToTry = {
             "must not have two tomatoes next to each other"),
         new OccurrenceRule(new RegExpEvent('tt|ee|pp|oo'), 0, 0,
             "must not have two of the same ingredient next to each other"),
+        new CompositeRule([
+            new OccurrenceRule(new RegExpEvent('p'), 2, undefined),
+            new OccurrenceRule(new RegExpEvent('pp'), 0, 0),
+        ], "must have at least two peppers, but they must not be adjacent"),
+        new CompositeRule([
+            new OccurrenceRule(new RegExpEvent('e'), 2, 2),
+            new OccurrenceRule(new RegExpEvent('.'), 4, 4),
+        ], "must have exactly four items, exactly two of which must be eggplants"),
+        new CompositeRule([
+            new OccurrenceRule(new RegExpEvent('e'), 1, undefined),
+            new OccurrenceRule(new RegExpEvent('o'), 1, undefined),
+            new OccurrenceRule(new RegExpEvent('p'), 1, undefined),
+            new OccurrenceRule(new RegExpEvent('t'), undefined, 0),
+        ], "must have every ingredient except for tomatoes (and no tomatoes)"),
+        new CompositeRule([
+            new OccurrenceRule(new RegExpEvent('ot|to'), 0, 0),
+            new OccurrenceRule(new RegExpEvent('o'), 1, undefined),
+        ], "must contain an onion, but onions and tomatoes must not be adjacent"),
+        new CompositeRule([
+            new OccurrenceRule(new RegExpEvent('e.e'), 1, 1),
+            new OccurrenceRule(new RegExpEvent('e'), 2, 2),
+        ], "must contain exactly two eggplants, and there must be exactly one item between them"),
     ],
     "jirka": []
 }
 
-for(let veg of ["o", "t", "e", "p"]){
+for (let veg of ["o", "t", "e", "p"]) {
     // for (let num = 1; num < MAX_SIZE-2; num++){
     //     _rulesToTry["jirka"].push(
     //         new OccurrenceRule(new RegExpEvent(veg), undefined, num, "at most "+num+" "+veg),
@@ -107,24 +127,32 @@ for(let veg of ["o", "t", "e", "p"]){
     // }
 
     _rulesToTry["jirka"].push(
-        new OccurrenceRule(new RegExpEvent('^'+veg+'|'+veg+'$'), undefined, 0, veg+" not at the edge"),
-        new OccurrenceRule(new RegExpEvent('^'+veg+'|'+veg+'$'), 1, 2, "at least one "+veg+" at the edge")
+        new OccurrenceRule(new RegExpEvent('^' + veg + '|' + veg + '$'), undefined, 0, veg + " not at the edge"),
+        new OccurrenceRule(new RegExpEvent('^' + veg + '|' + veg + '$'), 1, 2, "at least one " + veg + " at the edge")
     )
     for (let veg2 of ["o", "t", "e", "p"]) {
-        if (veg == veg2){
+        if (veg == veg2) {
             continue
         }
         _rulesToTry["jirka"].push(
-            new OccurrenceRule(new RegExpEvent('(^|[^'+veg+'])'+veg2+'($|[^'+veg+'])'), undefined, 0, "each "+veg2+" must be adjacent to "+veg),
-            new OccurrenceRule(new RegExpEvent(veg+veg2+'|'+veg2+veg), undefined, 0, "each "+veg2+" must not be adjacent to "+veg),
-            new OccurrenceRule(new RegExpEvent(veg2 + '($|[^' + veg + '])'), undefined, 0, "each "+veg2+" must be left of "+veg),
-            new OccurrenceRule(new RegExpEvent('(^|[^' + veg + '])'+veg2), undefined, 0, "each "+veg2+" must be right of "+veg),
+            new OccurrenceRule(new RegExpEvent('(^|[^' + veg + '])' + veg2 + '($|[^' + veg + '])'), undefined, 0, "each " + veg2 + " must be adjacent to " + veg),
+            new OccurrenceRule(new RegExpEvent(veg + veg2 + '|' + veg2 + veg), undefined, 0, "each " + veg2 + " must not be adjacent to " + veg),
+            new OccurrenceRule(new RegExpEvent(veg2 + '($|[^' + veg + '])'), undefined, 0, "each " + veg2 + " must be left of " + veg),
+            new OccurrenceRule(new RegExpEvent('(^|[^' + veg + '])' + veg2), undefined, 0, "each " + veg2 + " must be right of " + veg),
         )
         _rulesToTry["jirka"].push(
-            new CompareOccurencesRule(new RegExpEvent(veg), new RegExpEvent(veg2), (x, y) => { return x == y }, "the number of "+veg2+" and "+veg+" is equal"),
-            new CompareOccurencesRule(new RegExpEvent(veg), new RegExpEvent(veg2), (x, y) => { return x > y }, "the number of "+veg+" is greater than the number of "+veg2+" "),
-            new CompareOccurencesRule(new RegExpEvent(veg), new RegExpEvent(veg2), (x, y) => { return x >= y }, "the number of "+veg+" is greater or equal to the number of "+veg2+" "),
-            new CompareOccurencesRule(new RegExpEvent(veg), new RegExpEvent(veg2), (x, y) => { return x == 2*y }, "the number of "+veg+" is two times the number of "+veg2+" "),
+            new CompareOccurencesRule(new RegExpEvent(veg), new RegExpEvent(veg2), (x, y) => {
+                return x == y
+            }, "the number of " + veg2 + " and " + veg + " is equal"),
+            new CompareOccurencesRule(new RegExpEvent(veg), new RegExpEvent(veg2), (x, y) => {
+                return x > y
+            }, "the number of " + veg + " is greater than the number of " + veg2 + " "),
+            new CompareOccurencesRule(new RegExpEvent(veg), new RegExpEvent(veg2), (x, y) => {
+                return x >= y
+            }, "the number of " + veg + " is greater or equal to the number of " + veg2 + " "),
+            new CompareOccurencesRule(new RegExpEvent(veg), new RegExpEvent(veg2), (x, y) => {
+                return x == 2 * y
+            }, "the number of " + veg + " is two times the number of " + veg2 + " "),
             // new CompareOccurencesRule(new RegExpEvent(veg), new RegExpEvent(veg2), (x, y) => { return x == 3*y }, "the number of "+veg+" is three times the number of "+veg2+" "),
         )
         for (let veg3 of ["o", "t", "e", "p"]) {
@@ -132,12 +160,12 @@ for(let veg of ["o", "t", "e", "p"]){
                 continue
             }
             _rulesToTry["jirka"].push(
-                new OccurrenceRule(new RegExpEvent('(^|[^' + veg+veg3 + '])' + veg2 + '($|[^' + veg+veg3 + '])'), undefined, 0, "each " + veg2 + " must be adjacent to " + veg + " or "+veg3),
-                new OccurrenceRule(new RegExpEvent(veg + veg2 + '|' + veg2 + veg + '|' + veg3 + veg2 + '|' + veg2 + veg3), undefined, 0, "each " + veg2 + " must not be adjacent to " + veg + " or "+ veg3),
+                new OccurrenceRule(new RegExpEvent('(^|[^' + veg + veg3 + '])' + veg2 + '($|[^' + veg + veg3 + '])'), undefined, 0, "each " + veg2 + " must be adjacent to " + veg + " or " + veg3),
+                new OccurrenceRule(new RegExpEvent(veg + veg2 + '|' + veg2 + veg + '|' + veg3 + veg2 + '|' + veg2 + veg3), undefined, 0, "each " + veg2 + " must not be adjacent to " + veg + " or " + veg3),
                 new OccurrenceRule(new RegExpEvent(veg2 + '($|[^' + veg + veg3 + '])'), undefined, 0, "each " + veg2 + " must be left of " + veg + " or " + veg3),
                 new OccurrenceRule(new RegExpEvent('(^|[^' + veg + veg3 + '])' + veg2), undefined, 0, "each " + veg2 + " must be right of " + veg + " or " + veg3),
             )
-            
+
 
         }
     }
@@ -150,16 +178,18 @@ for(let veg of ["o", "t", "e", "p"]){
     )
 }
 
-    // for (let num = 1; num < MAX_SIZE; num++) {
-    //     _rulesToTry["jirka"].push(
-    //         new OccurrenceRule(new RegExpEvent(veg), undefined, num, "at most " + num + " " + veg),
-    //         new OccurrenceRule(new RegExpEvent(veg), num, undefined, "at least " + num + " " + veg),
-    //     )
-    // }
+// for (let num = 1; num < MAX_SIZE; num++) {
+//     _rulesToTry["jirka"].push(
+//         new OccurrenceRule(new RegExpEvent(veg), undefined, num, "at most " + num + " " + veg),
+//         new OccurrenceRule(new RegExpEvent(veg), num, undefined, "at least " + num + " " + veg),
+//     )
+// }
 
 const rulesToTry = _rulesToTry[process.argv[2]]
 
-var nSkewers: number = parseInt(process.argv[3])
+const nSkewers : number = parseInt(process.argv[3])
+const MIN_SIZE = _MIN_SIZE[process.argv[2]]
+const MAX_SIZE = _MAX_SIZE[process.argv[2]]
 
 function solutionCount(rules : Rule[], cutoff : number) : [number, Ingredient[][][]] {
 
@@ -190,12 +220,12 @@ function solutionCount(rules : Rule[], cutoff : number) : [number, Ingredient[][
                     return [10000, []]
                 }
                 solCount++
+
                 if (examples.length < 10) {
                     examples.push([sk1])
                 }
             }
-        }
-        else if(nSkewers == 2) {
+        } else if (nSkewers == 2) {
             for (let i2 = i1; i2 < skewers.length; i2++) {
                 let sk2 = skewers[i2]
                 let passEvery = rules.every(rule => rule.acceptable(sk1) || rule.acceptable(sk2))
@@ -235,7 +265,7 @@ function printRuleset(ruleset : Ruleset) {
     }
     console.log("solution examples:")
     for (const sol of ruleset.solutions) {
-        console.log(sol.join(" | "))
+        console.log("    ", sol.join(" | "))
     }
     console.log()
 }
@@ -249,7 +279,7 @@ function search() {
 
     while (true) {
         iterations++
-        if (iterations % 1000 === 0) {
+        if (iterations % 5000 === 0) {
             console.log(`${iterations} iterations: vvv`)
             for (const ruleset of bestRulesets.slice(0, 3)) {
                 printRuleset(ruleset)
