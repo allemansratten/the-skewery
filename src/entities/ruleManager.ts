@@ -33,7 +33,7 @@ export class RuleManager {
             this.ruleText.push(ruleText)
         }
 
-        this.levelText = scene.add.text(840, 340, '', { fontFamily: 'Kalam', color: 'black', fontSize: '3.2em' })
+        this.levelText = scene.add.text(820, 340, '', { fontFamily: 'Kalam', color: 'black', fontSize: '3.2em' })
         // DEBUG ONLY
         if (window.location.href.indexOf('127.0.0.1') != 0) {
             this.levelText.setInteractive({})
