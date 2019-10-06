@@ -39,18 +39,16 @@ let rulesToTry = [
         "must be a palindrome (stays the same when reversed)"),
     new OccurrenceRule(new PalindromeEvent(), 0, 0,
         "must not be a palindrome (palindrome = stays the same when reversed)"),
-    new OccurrenceRule(new RegExpEvent('e'), undefined, 0,
-        "must not contain eggplant"),
-    new OccurrenceRule(new RegExpEvent('t'), undefined, 0,
-        "must not contain tomatoes"),
+    // new OccurrenceRule(new RegExpEvent('e'), undefined, 0,
+    //     "must not contain eggplant"),
+    // new OccurrenceRule(new RegExpEvent('t'), undefined, 0,
+    //     "must not contain tomatoes"),
     // new OccurrenceRule(new RegExpEvent('.'), 0, 2,
     //     "must be at most two items"),
     new OccurrenceRule(new RegExpEvent('.'), 0, 3,
         "must be at most three items"),
     new OccurrenceRule(new RegExpEvent('.'), 4, undefined,
         "must be at least four items"),
-    // Rules from an example level
-
     // More rules
     new OccurrenceRule(new RegExpEvent('p|o'), undefined, 0,
         "must contain neither peppers nor onions"),
@@ -67,11 +65,11 @@ let rulesToTry = [
         new OccurrenceRule(new PalindromeEvent(), 1, undefined),
         new OccurrenceRule(new RegExpEvent('^(..)*$'), 1, undefined),
     ], "must be a palindrome of an even length"),
-    new CompositeRule([
-        new OccurrenceRule(new RegExpEvent('e'), 1, undefined),
-        new OccurrenceRule(new RegExpEvent('p'), 1, undefined),
-        new OccurrenceRule(new RegExpEvent('p.*e'), undefined, 0)
-    ], "must contain an eggplant and a pepper, and each eggplant must be to the left of all peppers"),
+    // new CompositeRule([
+    //     new OccurrenceRule(new RegExpEvent('e'), 1, undefined),
+    //     new OccurrenceRule(new RegExpEvent('p'), 1, undefined),
+    //     new OccurrenceRule(new RegExpEvent('p.*e'), undefined, 0)
+    // ], "must contain an eggplant and a pepper, and each eggplant must be to the left of all peppers"),
     new CompositeRule([
         new OccurrenceRule(new RegExpEvent('o'), 1, undefined),
         new OccurrenceRule(new RegExpEvent('t'), 1, undefined),
@@ -85,6 +83,28 @@ let rulesToTry = [
         "must not have two tomatoes next to each other"),
     new OccurrenceRule(new RegExpEvent('tt|ee|pp|oo'), 0, 0,
         "must not have two of the same ingredient next to each other"),
+    new CompositeRule([
+        new OccurrenceRule(new RegExpEvent('p'), 2, undefined),
+        new OccurrenceRule(new RegExpEvent('pp'), 0, 0),
+    ], "must have at least two peppers, but they must not be adjacent"),
+    new CompositeRule([
+        new OccurrenceRule(new RegExpEvent('e'), 2, 2),
+        new OccurrenceRule(new RegExpEvent('.'), 4, 4),
+    ], "must have exactly four items, exactly two of which must be eggplants"),
+    new CompositeRule([
+        new OccurrenceRule(new RegExpEvent('e'), 1, undefined),
+        new OccurrenceRule(new RegExpEvent('o'), 1, undefined),
+        new OccurrenceRule(new RegExpEvent('p'), 1, undefined),
+        new OccurrenceRule(new RegExpEvent('t'), undefined, 0),
+    ], "must have every ingredient except for tomatoes (and no tomatoes)"),
+    new CompositeRule([
+        new OccurrenceRule(new RegExpEvent('ot|to'), 0, 0),
+        new OccurrenceRule(new RegExpEvent('o'), 1, undefined),
+    ], "must contain an onion, but onions and tomatoes must not be adjacent"),
+    new CompositeRule([
+        new OccurrenceRule(new RegExpEvent('e.e'), 1, 1),
+        new OccurrenceRule(new RegExpEvent('e'), 2, 2),
+    ], "must contain exactly two eggplants, and there must be exactly one item between them"),
 ]
 
 function solutionCount(rules : Rule[], cutoff : number) : [number, Ingredient[][][]] {
@@ -116,7 +136,7 @@ function solutionCount(rules : Rule[], cutoff : number) : [number, Ingredient[][
                     return [10000, []]
                 }
                 solCount++
-                if (examples.length < 10) {
+                if (examples.length < 15) {
                     examples.push([sk1, sk2])
                 }
             }
@@ -152,14 +172,14 @@ function printRuleset(ruleset : Ruleset) {
 function search() {
     shuffle(rulesToTry)
     let indices : number[] = []
-    const nBest = 10
+    const nBest = 5
     const maxNRules = 5
     let bestRulesets : Ruleset[] = []
     let iterations = 0
 
     while (true) {
         iterations++
-        if (iterations % 1000 === 0) {
+        if (iterations % 5000 === 0) {
             console.log(`${iterations} iterations: vvv`)
             for (const ruleset of bestRulesets.slice(0, 3)) {
                 printRuleset(ruleset)
@@ -177,7 +197,7 @@ function search() {
         if (curRules.length <= maxNRules) {
             [nSolutions, examples] = solutionCount(
                 curRules,
-                bestRulesets.length > 0 ? bestRulesets[bestRulesets.length - 1].nSolutions : 1000
+                bestRulesets.length > 0 ? bestRulesets[0].nSolutions : 1000
             )
         }
         if (nSolutions > 0) {
