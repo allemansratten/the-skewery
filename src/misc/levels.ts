@@ -43,6 +43,8 @@ export let levels: Level[] = [
             "must have exactly one onion"),
         new OccurrenceRule(new RegExpEvent("tp"), 1, undefined,
             "must contain a tomato followed by pepper"),
+        new OccurrenceRule(new RegExpEvent(""), 0, undefined,
+            "(each rule must be satisfied by at least one skewer)"),
     ], 2),
     // Jirka 1
     new Level([
@@ -147,8 +149,8 @@ export let levels: Level[] = [
         new OccurrenceRule(new UniqueIngredientsEvent(), 4, undefined,
             "must contain all four different ingredients"),
         new CompositeRule([
-            new OccurrenceRule(new RegExpEvent('(^|[^o])p($|[^o])'),  1, undefined),
-            new OccurrenceRule(new RegExpEvent('(^|[^e])t($|[^e])'),  1, undefined),
+            new OccurrenceRule(new RegExpEvent('(^|[^o])p($|[^o])'), 1, undefined),
+            new OccurrenceRule(new RegExpEvent('(^|[^e])t($|[^e])'), 1, undefined),
         ], "there must be a pepper which is not next to an onion and there is a tomato which is not next to an eggplant"),
         new OccurrenceRule(new RegExpEvent(".o."), 1, undefined,
             "must contain an onion which is not at one of the edges"),
