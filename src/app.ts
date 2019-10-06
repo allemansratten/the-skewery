@@ -10,8 +10,8 @@ let gameConfig: object = {
     height: 400,
     parent: "game_canvas",
     backgroundColor: "#000000",
-    // scene: [MainScene, MenuScene, IntroScene, OutroScene],
-    scene: [MenuScene, MainScene, IntroScene, OutroScene],
+    scene: [MainScene, MenuScene, IntroScene, OutroScene],
+    // scene: [MenuScene, MainScene, IntroScene, OutroScene],
 }
 
 window.onload = () => {

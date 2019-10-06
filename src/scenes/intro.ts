@@ -7,13 +7,11 @@ export class IntroScene extends Phaser.Scene {
         });
     }
 
-    preload() {
-        // this.load.image('background_menu', 'assets/background_menu.png');
-    }
+    preload() { }
 
     create() {
         const style = { fontFamily: 'Kalam', color: '#CCCCCC' }
-        let text0 = this.add.text(350, 150, 'You start with nothing..', style)
+        let text0 = this.add.text(350, 150, 'You always start with nothing..', style)
         text0.setAlpha(0)
         let text1 = this.add.text(350, 150, '..nothing, except for an empty skewer.', style)
         text1.setAlpha(0)

@@ -21,6 +21,20 @@ export let levels: Level[] = [
         new OccurrenceRule(new RegExpEvent("tt"), undefined, 0,
             "must not have two consecutive tomatoes"),
     ], 1),
+    // Náročné na pochopení
+    new Level([
+        new CompositeRule([
+            new OccurrenceRule(new RegExpEvent("^e$|[po]e$|^e[po]"), undefined, 0),
+        ], "all eggplants must be adjacent to a tomato"),
+        new OccurrenceRule(new RegExpEvent("etp|pte|^..e..$|^e$|^.e.$"), 1, undefined,
+            "must contain a tomato next to a pepper and eggplant, unless there exist an eggplant in the middle"),
+        new CompositeRule([
+            new OccurrenceRule(new RegExpEvent("^t|t$"), undefined, 0),
+            new OccurrenceRule(new RegExpEvent("^e|e$"), undefined, 0),
+        ], "tomatoes and eggplants must not be placed on the edge"),
+        new OccurrenceRule(new RegExpEvent("o"), undefined, 0,
+            "onions are forbidden"),
+    ], 1, 5),
     // Uvodni pro dva spizy, vysvetluje, ze staci splneni na alespon jednom
     new Level([
         new OccurrenceRule(new RegExpEvent("o"), 2, undefined,
