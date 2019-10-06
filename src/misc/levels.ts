@@ -3,6 +3,7 @@ import { RegExpEvent } from "../rules/regExpEvent"
 import { OccurrenceRule } from "../rules/occurrenceRule"
 import { CompositeRule } from "../rules/compositeRule"
 import { PalindromeEvent } from "../rules/palindromeEvent"
+import { UniqueIngredientsEvent } from "../rules/uniqueIngredientsEvent"
 
 
 export let levels : Level[] = [
@@ -21,6 +22,21 @@ export let levels : Level[] = [
             "must not have two consecutive tomatoes"),
     ], 1),
     // TODO cca 10-15 levelů, podle toho co zvládne Vašek
+    new Level([
+        new OccurrenceRule(new RegExpEvent('o'), 2, undefined, "at least two onions"),
+        new CompositeRule([
+            new OccurrenceRule(new RegExpEvent('.t.'), 1, undefined),
+            new OccurrenceRule(new RegExpEvent('^t|t$'), 1, undefined)
+        ], "must contain a tomato at the edge and a tomato not at the edge"),
+        new CompositeRule([
+            new OccurrenceRule(new RegExpEvent('.o.'), 1, undefined),
+            new OccurrenceRule(new RegExpEvent('^o|o$'), 0, 0)
+        ], "must contain an onion which is not at the edge"),
+        new OccurrenceRule(new UniqueIngredientsEvent(), 2, 2,
+            "must contain exactly two kinds of ingredients"),
+        new OccurrenceRule(new RegExpEvent('.'), 0, 2,
+            "must be at most two items"),
+    ], 2),
     new Level([
         new CompositeRule([
             new OccurrenceRule(new RegExpEvent('....'), undefined, 0),
@@ -50,4 +66,5 @@ export let levels : Level[] = [
         new OccurrenceRule(new RegExpEvent("tt"), undefined, 0,
             "must not have two consecutive tomatoes"),
     ], 1),
+    new Level([], 0),
 ]

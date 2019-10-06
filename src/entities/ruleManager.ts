@@ -38,33 +38,48 @@ export class RuleManager {
 
         this.initLevel()
         this.updateProgress()
+
+        let progressRefresher = () => {
+            setTimeout(progressRefresher, 300)
+            this.updateProgress()
+        }
+        progressRefresher()
+    }
+
+    private reset(): void {
+        let level = levels[this.curLevel]
+        for (let text of this.numberText) {
+            text.setColor('black')
+        }
+        for (let text of this.ruleText) {
+            text.setColor('black')
+            text.setText('')
+        }
+        if (level.skewers == 1) {
+            this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 140))
+        } else {
+            this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 10))
+            this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 170))
+        }
+    }
+
+    private impale(callback: () => void): void {
+        if (this.scene.foodManager.skewers.length > 1) {
+            this.scene.foodManager.skewers[1].die(() => { })
+        }
+        let tween = this.scene.foodManager.skewers[0].die(() => {
+            callback()
+        })
     }
 
     private initLevel(): void {
-        let reset = () => {
-            let level = levels[this.curLevel]
-            if (level.skewers == 1) {
-                this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 140))
-            } else {
-                this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 10))
-                this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 170))
-            }
-        }
-
-        if(this.scene.foodManager.skewers.length > 0) {
-            if(this.scene.foodManager.skewers.length > 1) {
-                this.scene.foodManager.skewers[1].die(() => {})
-            }
-            let tween = this.scene.foodManager.skewers[0].die(() => {
-                reset()
-            })
-            
+        if (this.scene.foodManager.skewers.length > 0) {
+            this.impale(() => { this.reset() })
             this.scene.foodManager.arrangement = new Array<Array<FoodSpot>>()
             this.scene.foodManager.skewers = new Array<Skewer>()
         } else {
-            reset()
+            this.reset()
         }
-
     }
 
     public updateProgress(): void {
@@ -89,7 +104,21 @@ export class RuleManager {
         }
 
         if (good == levels[this.curLevel].rules.length) {
-            if (this.curLevel == levels.length - 1) {
+            if (this.curLevel == levels.length - 2) {
+                this.impale(() => {
+                    let transitionRectangle = this.scene.add.rectangle(0, 0, 900, 400, 0x000000)
+                    transitionRectangle.setOrigin(0, 0)
+                    transitionRectangle.setDepth(1000)
+                    transitionRectangle.setAlpha(0)
+                    this.scene.add.tween({
+                        targets: transitionRectangle,
+                        alpha: 1,
+                        duration: 500,
+                        onComplete: () => {
+                            this.scene.game.scene.start('OutroScene')
+                        }
+                    })
+                })
             } else {
                 this.curLevel += 1
                 this.initLevel()
@@ -107,6 +136,6 @@ export class RuleManager {
                 this.ruleText[i].setColor('#AA1111')
             }
         }
-        this.levelText.setText((this.curLevel + 1) + '/' + levels.length)
+        this.levelText.setText((this.curLevel + 1) + '/' + (levels.length - 1))
     }
 }
