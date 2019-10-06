@@ -31,7 +31,7 @@ export let levels : Level[] = [
         new CompositeRule([
             new OccurrenceRule(new RegExpEvent('.o.'), 1, undefined),
             new OccurrenceRule(new RegExpEvent('^o|o$'), 0, 0)
-        ], "must contain an onion which is not at the edge"),
+        ], "must contain an onion and onions must not be at the edge"),
         new OccurrenceRule(new UniqueIngredientsEvent(), 2, 2,
             "must contain exactly two kinds of ingredients"),
         new OccurrenceRule(new RegExpEvent('.'), 0, 2,
@@ -57,7 +57,7 @@ export let levels : Level[] = [
         ], "there must be exactly one e next to each p"),
         new CompositeRule([
             new OccurrenceRule(new PalindromeEvent(), 1, undefined),
-            new OccurrenceRule(new RegExpEvent('^.$|^...$'), 1, undefined),
+            new OccurrenceRule(new RegExpEvent('^.(..)*$'), 1, undefined),
         ], "palindrome of an odd length"),
     ], 2),
     new Level([
