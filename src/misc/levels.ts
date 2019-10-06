@@ -13,7 +13,7 @@ export let levels: Level[] = [
             "must have at least one tomato"),
         new OccurrenceRule(new RegExpEvent("o"), 1, undefined,
             "must have at least one onion"),
-    ], 1, 5),
+    ], 1),
     // Uvodni, rekne hracovi, ze toto bude puzzle hra o špízu
     new Level([
         new OccurrenceRule(new RegExpEvent("t"), 2, undefined,
@@ -65,8 +65,8 @@ export let levels: Level[] = [
     ], 1, 7),
     // Jirka 3
     new Level([
-        new OccurrenceRule(new RegExpEvent('^o|o$'), undefined, 0, "onion not at the edge"),
-        new OccurrenceRule(new UniqueIngredientsEvent(), 4, 4, "must contain exactly four kinds of ingredients"),
+        new OccurrenceRule(new RegExpEvent('^o|o$'), undefined, 0, "onions must not be at the edge"),
+        new OccurrenceRule(new UniqueIngredientsEvent(), 4, 4, "must contain all four kinds of ingredients"),
         new OccurrenceRule(new RegExpEvent('(^|[^o])e'), undefined, 0, "each eggplant must be immediately to the right of an onion"),
         new OccurrenceRule(new PalindromeEvent(), 1, 1, "must be a palindrome (stays the same when reversed)"),
     ], 1, 7),

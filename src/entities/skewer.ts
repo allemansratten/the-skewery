@@ -24,7 +24,7 @@ export class Skewer extends Phaser.GameObjects.Image {
         // Instantiate food spots
         this.localArrangement = new Array<FoodSpot>()
         for (let i = 0; i < level.spots; i++) {
-            this.localArrangement.push(new FoodSpot(scene, (9-level.spots)*55+ 50 + x + i * 55, y + 90))
+            this.localArrangement.push(new FoodSpot(scene, (9-level.spots)*55+ 50 + x + i * 55, y + 65))
         }
         manager.arrangement.push(this.localArrangement)
     }
