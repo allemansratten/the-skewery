@@ -66,4 +66,5 @@ export let levels : Level[] = [
         new OccurrenceRule(new RegExpEvent("tt"), undefined, 0,
             "must not have two consecutive tomatoes"),
     ], 1),
+    new Level([], 0),
 ]

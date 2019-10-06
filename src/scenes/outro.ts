@@ -14,6 +14,19 @@ export class OutroScene extends Phaser.Scene {
     }
 
     create() {
+        let transitionRectangle = this.add.rectangle(0, 0, 900, 400, 0x000000)
+        transitionRectangle.setOrigin(0, 0)
+        transitionRectangle.setDepth(1000)
+        this.add.tween({
+            targets: transitionRectangle,
+            alpha: 0,
+            duration: 200,
+            onComplete: () => {
+                transitionRectangle.destroy(true)
+            }
+        })
+
+
         const style = { fontFamily: 'Kalam', color: '#CCCCCC' }
         let text0 = this.add.text(80, 330, '      Vilda\n(programming)\n    (chef)', style)
         let text1 = this.add.text(310, 330, '      Vašek\n   (content)\n(programming)', style)
