@@ -107,7 +107,7 @@ export class Skewer extends Phaser.GameObjects.Image {
             duration: 500,
             onStart: () => {
                 this.scene.sound.play("eating", { name: 'c', start: 0.0, duration: 0.5, config: {} },)
-            }
+            },
             onComplete: () => { 
                 this.destroy(true)
                 onComplete()
