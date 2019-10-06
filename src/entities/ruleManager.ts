@@ -22,15 +22,15 @@ export class RuleManager {
         this.scene = scene
         let backgroundBoard = scene.add.image(0, 0, 'background_board_dark')
         backgroundBoard.setOrigin(0, 0)
-        backgroundBoard.setDisplaySize(260, 450)
+        backgroundBoard.setDisplaySize(315, 450)
         backgroundBoard.setAlpha(1)
 
         for (let i = 0; i < this.TOTAL_BOXES; i++) {
-            let numberText = scene.add.text(15, 20 + i * 81, '' + (i + 1), { fontFamily: 'Kalam', color: 'black' })
+            let numberText = scene.add.text(7, 20 + i * 81, '' + (i + 1), { fontFamily: 'Kalam', color: 'black' })
             this.numberText.push(numberText)
 
-            let ruleText = scene.add.text(31, 20 + i * 81, "", { fontFamily: 'Kalam', color: 'black' })
-            ruleText.setWordWrapWidth(230)
+            let ruleText = scene.add.text(23, 20 + i * 81, "", { fontFamily: 'Kalam', color: 'black' })
+            ruleText.setWordWrapWidth(285)
             this.ruleText.push(ruleText)
         }
 
@@ -47,10 +47,10 @@ export class RuleManager {
 
         let level = levels[this.curLevel]
         if (level.skewers == 1) {
-            this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 575, 180))
+            this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 140))
         } else {
-            this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 575, 80))
-            this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 575, 200))
+            this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 80))
+            this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 200))
         }
     }
 
@@ -63,7 +63,7 @@ export class RuleManager {
             return false
         }
 
-        // Comput number of satisfied rules
+        // Compute number of satisfied rules
         let good = 0
         let arrangements = this.scene.foodManager.getArrangement()
         for (let i = 0; i < levels[this.curLevel].rules.length; i++) {

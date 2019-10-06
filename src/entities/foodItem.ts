@@ -41,12 +41,11 @@ export class FoodItem extends Phaser.GameObjects.Image {
         })
 
         this.on('dragstart', (pointer: Phaser.Input.Pointer) => {
-            // console.log("dragstart")
             this.setTint(0xAAAAAA);
             this.x = pointer.position.x
             this.y = pointer.position.y
-            
-            if(this.state == FoodItemState.INVISIBLE) {
+
+            if (this.state == FoodItemState.INVISIBLE) {
                 base.instantiateNew()
                 this.state = FoodItemState.DRAG
                 this.setAlpha(1)
@@ -68,7 +67,7 @@ export class FoodItem extends Phaser.GameObjects.Image {
 
         this.on('dragend', (pointer: Phaser.Input.Pointer) => {
             this.state = FoodItemState.PLACED
-            
+
             if (this.currentFoodSpot === undefined) {
                 this.remove()
             }
@@ -77,11 +76,10 @@ export class FoodItem extends Phaser.GameObjects.Image {
             }
             // clear foodspot hover
             foodManager.resetHover()
-            
+
         });
-        
+
         this.on("drop", (pointer: Phaser.Input.Pointer, dropZone: Phaser.GameObjects.Image) => {
-            // console.log("drop")
             if (dropZone instanceof FoodSpot) {
                 this.dropToFoodSpot(dropZone)
                 // clear foodspot hover
@@ -90,17 +88,14 @@ export class FoodItem extends Phaser.GameObjects.Image {
             } else {
                 this.remove()
             }
-            
+
         })
 
         this.on("dragenter", (pointer: Phaser.Input.Pointer, dropZone: FoodSpot) => {
-            // console.log("dragenter")
             dropZone.hover = true
-            
             foodManager.rearrange()
         })
         this.on("dragleave", (pointer: Phaser.Input.Pointer, dropZone: FoodSpot) => {
-            // console.log("dragleave")
             foodManager.resetHover()
             foodManager.rearrange()
         })
@@ -109,8 +104,8 @@ export class FoodItem extends Phaser.GameObjects.Image {
 
         scene.add.existing(this)
     }
-    public dropToFoodSpot (foodSpot: FoodSpot) {
-        if (foodSpot.isFree()){
+    public dropToFoodSpot(foodSpot: FoodSpot) {
+        if (foodSpot.isFree()) {
             // this.x = foodSpot.x
             // this.y = foodSpot.y
 
@@ -121,16 +116,17 @@ export class FoodItem extends Phaser.GameObjects.Image {
                 duration: 200,
                 ease: 'Power2'
             })
-    
+
             this.currentFoodSpot = foodSpot
             foodSpot.currentFoodItem = this
         }
         else {
             // TODO remove the food item
+            // Really? It seems to be working even without this -zouharvi
         }
     }
 
-    public removeFoodSpot () {
+    public removeFoodSpot() {
         if (this.currentFoodSpot !== undefined) {
             this.currentFoodSpot.currentFoodItem = undefined
             this.currentFoodSpot = undefined
