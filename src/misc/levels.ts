@@ -104,7 +104,7 @@ export let levels: Level[] = [
     ], 2, 4),
     // Sachova uloha 4
     new Level([
-        new OccurrenceRule(new RegExpEvent('^p$|^p[oep]|[oep]p$|[oep]p[oep]'), undefined, 0,
+        new OccurrenceRule(new RegExpEvent('^p$|^p[otp]|[otp]p$|[otp]p[otp]'), undefined, 0,
             "all peppers must be adjacent to an eggplant"),
         new OccurrenceRule(new RegExpEvent('^e|e$'), undefined, 0,
             "eggplants must not be on the edge"),
