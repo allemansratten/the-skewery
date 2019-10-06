@@ -14,41 +14,41 @@ export let levels : Level[] = [
             "must have at least one onion"),
     ], 1),
     // Uvodni, rekne hracovi, ze toto bude puzzle hra o špízu
-    // new Level([
-    //     new OccurrenceRule(new RegExpEvent("t"), 2, undefined,
-    //         "must have at least two tomatoes"),
-    //     new OccurrenceRule(new RegExpEvent("tt"), undefined, 0,
-    //         "must not have two consecutive tomatoes"),
-    // ], 1),
-    // // TODO cca 10-15 levelů, podle toho co zvládne Vašek
-    // new Level([
-    //     new CompositeRule([
-    //         new OccurrenceRule(new RegExpEvent('....'), undefined, 0),
-    //         new OccurrenceRule(new RegExpEvent('p'), 1, 1),
-    //     ], "at most 3 items, exactly one p"),
-    //     new OccurrenceRule(new RegExpEvent('e'), 0, 1, "at most 1 e"),
-    //     new CompositeRule([
-    //         new OccurrenceRule(new RegExpEvent('p'), 2, undefined),
-    //         new OccurrenceRule(
-    //             new RegExpEvent('.p.'), 1, undefined,
-    //             "at least one pepper not at the edge"
-    //         ),
-    //     ], "at least two peppers, from which at least one not at the edge"),
-    //     new CompositeRule([
-    //         new OccurrenceRule(new RegExpEvent('(^|[^e])p($|[^e])'),
-    //             undefined, 0, "p must be adjacent to >= 1 e"),
-    //         new OccurrenceRule(new RegExpEvent('epe'), undefined, 0),
-    //     ], "there must be exactly one e next to each p"),
-    //     new CompositeRule([
-    //         new OccurrenceRule(new PalindromeEvent(), 1, undefined),
-    //         new OccurrenceRule(new RegExpEvent('^.$|^...$'), 1, undefined),
-    //     ], "palindrome of an odd length"),
-    // ], 2),
-    // new Level([
-    //     new OccurrenceRule(new RegExpEvent("t"), 2, undefined,
-    //         "must have at least two tomatoes"),
-    //     new OccurrenceRule(new RegExpEvent("tt"), undefined, 0,
-    //         "must not have two consecutive tomatoes"),
-    // ], 1),
+    new Level([
+        new OccurrenceRule(new RegExpEvent("t"), 2, undefined,
+            "must have at least two tomatoes"),
+        new OccurrenceRule(new RegExpEvent("tt"), undefined, 0,
+            "must not have two consecutive tomatoes"),
+    ], 1),
+    // TODO cca 10-15 levelů, podle toho co zvládne Vašek
+    new Level([
+        new CompositeRule([
+            new OccurrenceRule(new RegExpEvent('....'), undefined, 0),
+            new OccurrenceRule(new RegExpEvent('p'), 1, 1),
+        ], "at most 3 items, exactly one p"),
+        new OccurrenceRule(new RegExpEvent('e'), 0, 1, "at most 1 e"),
+        new CompositeRule([
+            new OccurrenceRule(new RegExpEvent('p'), 2, undefined),
+            new OccurrenceRule(
+                new RegExpEvent('.p.'), 1, undefined,
+                "at least one pepper not at the edge"
+            ),
+        ], "at least two peppers, from which at least one not at the edge"),
+        new CompositeRule([
+            new OccurrenceRule(new RegExpEvent('(^|[^e])p($|[^e])'),
+                undefined, 0, "p must be adjacent to >= 1 e"),
+            new OccurrenceRule(new RegExpEvent('epe'), undefined, 0),
+        ], "there must be exactly one e next to each p"),
+        new CompositeRule([
+            new OccurrenceRule(new PalindromeEvent(), 1, undefined),
+            new OccurrenceRule(new RegExpEvent('^.$|^...$'), 1, undefined),
+        ], "palindrome of an odd length"),
+    ], 2),
+    new Level([
+        new OccurrenceRule(new RegExpEvent("t"), 2, undefined,
+            "must have at least two tomatoes"),
+        new OccurrenceRule(new RegExpEvent("tt"), undefined, 0,
+            "must not have two consecutive tomatoes"),
+    ], 1),
     new Level([], 0),
 ]
