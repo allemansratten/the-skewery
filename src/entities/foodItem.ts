@@ -29,7 +29,7 @@ export class FoodItem extends Phaser.GameObjects.Image {
         this.setFrame(Utils.ingredientNum(ingredient))
         this.setDisplaySize(58, 58)
         this.ingredient = ingredient
-        this.setAlpha(0.1)
+        this.setAlpha(0.03)
         scene.add.existing(this)
         this.setDepth(100)
 
@@ -122,8 +122,6 @@ export class FoodItem extends Phaser.GameObjects.Image {
             foodManager.resetHover()
             foodManager.rearrange()
         })
-
-        this.setAlpha(0.1)
 
         scene.add.existing(this)
     }
