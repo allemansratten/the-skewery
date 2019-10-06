@@ -20,7 +20,7 @@ export let levels: Level[] = [
             "must have at least two tomatoes"),
         new OccurrenceRule(new RegExpEvent("tt"), undefined, 0,
             "must not have two consecutive tomatoes"),
-    ], 1),
+    ], 1, 6),
     // Sachova uloha 4
     new Level([
         new OccurrenceRule(new RegExpEvent('^p$|^p[otp]|[otp]p$|[otp]p[otp]'), undefined, 0,

@@ -32,10 +32,12 @@ export class Skewer extends Phaser.GameObjects.Image {
     public die(onComplete: () => void): Phaser.Tweens.Tween {
         let foodItems: Array<FoodItem> = new Array<FoodItem>()
         for (let spot of this.localArrangement) {
+            spot.setInteractive({ dropZone: false })
+
             this.scene.tweens.add({
                 targets: spot,
                 alpha: { from: 1, to: 0 },
-                duration: 500,
+                duration: 300,
                 onComplete: () => {
                     spot.destroy(true)
                 }
