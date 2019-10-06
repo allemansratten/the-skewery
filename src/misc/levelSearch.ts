@@ -31,10 +31,10 @@ function shuffle(array : any[]) {
 const MAX_SIZE = 4
 
 let rulesToTry = [
-    new OccurrenceRule(new RegExpEvent('(^|[^o])t($|[^o])'),
-        undefined, 0, "each tomato must be adjacent to an onion"),
-    new OccurrenceRule(new RegExpEvent('o'), undefined, 2, "at most two onions"),
-    new OccurrenceRule(new RegExpEvent('o'), 2, undefined, "at least two onions"),
+    new OccurrenceRule(new RegExpEvent('(^|[^o])t($|[^o])'), undefined, 0,
+        "each tomato must be adjacent to an onion"),
+    new OccurrenceRule(new RegExpEvent('o'), undefined, 2,
+        "must have at most two onions"),
     new OccurrenceRule(new PalindromeEvent(), 1, 1,
         "must be a palindrome (stays the same when reversed)"),
     new OccurrenceRule(new PalindromeEvent(), 0, 0,
@@ -43,42 +43,19 @@ let rulesToTry = [
         "must not contain eggplant"),
     new OccurrenceRule(new RegExpEvent('t'), undefined, 0,
         "must not contain tomatoes"),
-    new OccurrenceRule(new RegExpEvent('.'), 0, 2,
-        "must be at most two items"),
+    // new OccurrenceRule(new RegExpEvent('.'), 0, 2,
+    //     "must be at most two items"),
     new OccurrenceRule(new RegExpEvent('.'), 0, 3,
         "must be at most three items"),
     new OccurrenceRule(new RegExpEvent('.'), 4, undefined,
         "must be at least four items"),
     // Rules from an example level
-    // new CompositeRule([
-    //     new OccurrenceRule(new RegExpEvent('....'), undefined, 0),
-    //     new OccurrenceRule(new RegExpEvent('p'), 1, 1),
-    // ], "must be at most three items, exactly one pepper"),
-    // new OccurrenceRule(new RegExpEvent('e'), 0, 1, "at most 1 e"),
-    // new CompositeRule([
-    //     new OccurrenceRule(new RegExpEvent('p'), 2, undefined),
-    //     new OccurrenceRule(
-    //         new RegExpEvent('.p.'), 1, undefined,
-    //         "must have at least one pepper which is not at the edge"
-    //     ),
-    // ], "at least two peppers, from which at least one is not at the edge"),
-    // new CompositeRule([
-    //     new OccurrenceRule(new RegExpEvent('(^|[^e])p($|[^e])'),
-    //         undefined, 0, "p must be adjacent to >= 1 e"),
-    //     new OccurrenceRule(new RegExpEvent('epe'), undefined, 0),
-    // ], "there must be exactly one eggplant next to each pepper"),
-    // new CompositeRule([
-    //     new OccurrenceRule(new PalindromeEvent(), 1, undefined),
-    //     new OccurrenceRule(new RegExpEvent('^.(..)*$'), 1, undefined),
-    //     new OccurrenceRule(new RegExpEvent('e'), 1, undefined),
-    // ], "must be a palindrome of an odd length containing an eggplant"),
+
     // More rules
     new OccurrenceRule(new RegExpEvent('p|o'), undefined, 0,
         "must contain neither peppers nor onions"),
     new OccurrenceRule(new RegExpEvent('t|e'), undefined, 0,
         "must contain neither tomatoes nor eggplants"),
-    new OccurrenceRule(new UniqueIngredientsEvent(), 2, 2,
-        "must contain exactly two kinds of ingredients"),
     new OccurrenceRule(new UniqueIngredientsEvent(), 3, 3,
         "must contain exactly three kinds of ingredients"),
     new OccurrenceRule(new UniqueIngredientsEvent(), 0, 2,
@@ -90,14 +67,6 @@ let rulesToTry = [
         new OccurrenceRule(new PalindromeEvent(), 1, undefined),
         new OccurrenceRule(new RegExpEvent('^(..)*$'), 1, undefined),
     ], "must be a palindrome of an even length"),
-    new CompositeRule([
-        new OccurrenceRule(new RegExpEvent('.o.'), 1, undefined),
-        new OccurrenceRule(new RegExpEvent('^o|o$'), 0, 0)
-    ], "must contain an onion and onions must not be at the edge"),
-    new CompositeRule([
-        new OccurrenceRule(new RegExpEvent('.t.'), 1, undefined),
-        new OccurrenceRule(new RegExpEvent('^t|t$'), 1, undefined)
-    ], "must contain a tomato at the edge and a tomato not at the edge"),
     new CompositeRule([
         new OccurrenceRule(new RegExpEvent('e'), 1, undefined),
         new OccurrenceRule(new RegExpEvent('p'), 1, undefined),
