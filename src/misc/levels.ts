@@ -4,7 +4,7 @@ import { OccurrenceRule } from "../rules/occurrenceRule"
 import { CompositeRule } from "../rules/compositeRule"
 import { PalindromeEvent } from "../rules/palindromeEvent"
 import { UniqueIngredientsEvent } from "../rules/uniqueIngredientsEvent"
-
+import { CompareOccurencesRule } from "../rules/compareOccurencesRule"
 
 export let levels: Level[] = [
     // Uvodni, seznami hrace s prvky na obrazovce
@@ -21,10 +21,10 @@ export let levels: Level[] = [
         new OccurrenceRule(new RegExpEvent("tt"), undefined, 0,
             "must not have two consecutive tomatoes"),
     ], 1),
-    // Náročné na pochopení
+    // Zbytecne dlouha formulace, ale lehka uloha
     new Level([
         new CompositeRule([
-            new OccurrenceRule(new RegExpEvent("^e$|[po]e$|^e[po]"), undefined, 0),
+            new OccurrenceRule(new RegExpEvent("^e$|[poe]e$|^e[epo]"), undefined, 0),
         ], "all eggplants must be adjacent to a tomato"),
         new OccurrenceRule(new RegExpEvent("etp|pte|^..e..$|^e$|^.e.$"), 1, undefined,
             "must contain a tomato next to a pepper and eggplant, unless there exist an eggplant in the middle"),
@@ -102,6 +102,20 @@ export let levels: Level[] = [
             new OccurrenceRule(new RegExpEvent('ete'), undefined, 0),
         ], "each tomato must be adjacent to exactly one eggplant"),
     ], 2, 4),
+    // Sachova uloha 4
+    new Level([
+        new OccurrenceRule(new RegExpEvent('^p$|^p[oep]|[oep]p$|[oep]p[oep]'), undefined, 0,
+            "all peppers must be adjacent to an eggplant"),
+        new OccurrenceRule(new RegExpEvent('^e|e$'), undefined, 0,
+            "eggplants must not be on the edge"),
+        new OccurrenceRule(new RegExpEvent('t'), undefined, 0,
+            "tomatoes are not allowed"),
+        new CompareOccurencesRule(
+            new RegExpEvent('p'), new RegExpEvent('o'), (x, y) => { return x > y },
+            "there are more peppers than onions"),
+        new OccurrenceRule(new RegExpEvent('oo|tt|pp|ee'), undefined, 0,
+            "no ingredient is adjacent to the one of the same type"),
+    ], 1, 4),
     // Dummy uloha na konci (technicke duvody)
     new Level([], 0),
 ]
