@@ -25,6 +25,18 @@ export class MainScene extends Phaser.Scene {
     }
 
     create() {
+        let transitionRectangle = this.add.rectangle(0, 0, 900, 400, 0x000000)
+        transitionRectangle.setOrigin(0, 0)
+        transitionRectangle.setDepth(1000)
+        this.add.tween({
+            targets: transitionRectangle,
+            alpha: 0,
+            duration: 700,
+            onComplete: () => {
+                transitionRectangle.destroy(true)
+            }
+        })
+
         this.foodManager = new FoodManager(this)
         this.ruleManager = new RuleManager(this)
     }

@@ -2,7 +2,6 @@ import 'phaser'
 
 import { MainScene } from '../scenes/main'
 import { FoodSpot } from './foodSpot';
-import { Ingredient } from '../misc/ingredient';
 import { FoodManager } from './foodManager';
 import { FoodItem } from './foodItem';
 import { Utils } from '../misc/utils';
@@ -14,6 +13,12 @@ export class Skewer extends Phaser.GameObjects.Image {
         super(scene, x, y, 'skewer')
         this.setOrigin(0, 0)
         scene.add.existing(this)
+        this.setAlpha(0)
+        scene.add.tween({
+            targets: this,
+            alpha: { from: 0, to: 1},
+            duration: 700,
+        })
 
         // Instantiate food spots
         this.localArrangement = new Array<FoodSpot>()
@@ -29,7 +34,6 @@ export class Skewer extends Phaser.GameObjects.Image {
             this.scene.tweens.add({
                 targets: spot,
                 alpha: { from: 1, to : 0 },
-                ease: 'Power2',
                 duration: 500,
                 onComplete: () => { 
                     spot.destroy(true)
