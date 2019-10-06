@@ -11,6 +11,7 @@ let gameConfig: object = {
     parent: "game_canvas",
     backgroundColor: "#000000",
     scene: [MainScene, MenuScene, IntroScene, OutroScene],
+    // scene: [MenuScene, MainScene, IntroScene, OutroScene],
 }
 
 window.onload = () => {
