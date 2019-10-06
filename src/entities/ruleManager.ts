@@ -64,10 +64,10 @@ export class RuleManager {
             text.setText('')
         }
         if (level.skewers == 1) {
-            this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 140))
+            this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 140, level))
         } else {
-            this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 10))
-            this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 170))
+            this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 10, level))
+            this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 170, level))
         }
     }
 

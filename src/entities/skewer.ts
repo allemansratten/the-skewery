@@ -5,11 +5,12 @@ import { FoodSpot } from './foodSpot';
 import { FoodManager } from './foodManager';
 import { FoodItem } from './foodItem';
 import { Utils } from '../misc/utils';
+import { Level } from '../rules/level';
 
 export class Skewer extends Phaser.GameObjects.Image {
     localArrangement: Array<FoodSpot>
 
-    constructor(public scene: MainScene, public manager: FoodManager, x: number, y: number) {
+    constructor(public scene: MainScene, public manager: FoodManager, x: number, y: number, level: Level) {
         super(scene, x, y, 'skewer')
         this.setOrigin(0, 0)
         scene.add.existing(this)
@@ -22,8 +23,8 @@ export class Skewer extends Phaser.GameObjects.Image {
 
         // Instantiate food spots
         this.localArrangement = new Array<FoodSpot>()
-        for (let i = 0; i < 9; i++) {
-            this.localArrangement.push(new FoodSpot(scene, 50 + x + i * 55, y + 90))
+        for (let i = 0; i < level.spots; i++) {
+            this.localArrangement.push(new FoodSpot(scene, 50 + x + (8-i) * 55, y + 90))
         }
         manager.arrangement.push(this.localArrangement)
     }
