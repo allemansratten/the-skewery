@@ -87,7 +87,7 @@ export let levels: Level[] = [
             new OccurrenceRule(new RegExpEvent('....'), undefined, 0),
             new OccurrenceRule(new RegExpEvent('p'), 1, 1),
         ], "must be at most three items, exactly one pepper"),
-        new OccurrenceRule(new RegExpEvent('e'), 0, 1, "at most 1 e"),
+        new OccurrenceRule(new RegExpEvent('e'), 0, 1, "at most one eggplant"),
         new CompositeRule([
             new OccurrenceRule(new RegExpEvent('p'), 2, undefined),
             new OccurrenceRule(
