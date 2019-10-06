@@ -28,6 +28,7 @@ export class FoodSpot extends Phaser.GameObjects.Image {
         return this.currentFoodItem === undefined
     }
 
+    // @deprecated
     public die(): void {
         this.destroy(true)
         if(!this.isFree()) {

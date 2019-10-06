@@ -41,17 +41,34 @@ export class RuleManager {
     }
 
     private initLevel(): void {
-        this.scene.foodManager.skewers.forEach((value: Skewer) => value.die())
-        this.scene.foodManager.arrangement = new Array<Array<FoodSpot>>()
-        this.scene.foodManager.skewers = new Array<Skewer>()
-
-        let level = levels[this.curLevel]
-        if (level.skewers == 1) {
-            this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 140))
+        if(this.scene.foodManager.skewers.length > 0) {
+            if(this.scene.foodManager.skewers.length > 1) {
+                this.scene.foodManager.skewers[1].die(() => {})
+            }
+            let tween = this.scene.foodManager.skewers[0].die(() => {
+                // Wait until animation finishes
+                    let level = levels[this.curLevel]
+                    if (level.skewers == 1) {
+                        this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 140))
+                    } else {
+                        this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 10))
+                        this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 170))
+                    }
+            })
+            // tween.setCallback('onComplete', () => { console.log('yolo done') })
+            
+            this.scene.foodManager.arrangement = new Array<Array<FoodSpot>>()
+            this.scene.foodManager.skewers = new Array<Skewer>()
         } else {
-            this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 80))
-            this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 200))
+            let level = levels[this.curLevel]
+            if (level.skewers == 1) {
+                this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 140))
+            } else {
+                this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 10))
+                this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 170))
+            }
         }
+
     }
 
     public updateProgress(): void {
@@ -87,11 +104,11 @@ export class RuleManager {
             let rule = levels[this.curLevel].rules[i]
             this.ruleText[i].setText(rule.description)
             if (atLeastOneArrangement(rule)) {
-                this.numberText[i].setColor('green')
-                this.ruleText[i].setColor('green')
+                this.numberText[i].setColor('#119900')
+                this.ruleText[i].setColor('#119900')
             } else {
-                this.numberText[i].setColor('red')
-                this.ruleText[i].setColor('red')
+                this.numberText[i].setColor('#AA1111')
+                this.ruleText[i].setColor('#AA1111')
             }
         }
         this.levelText.setText((this.curLevel + 1) + '/' + levels.length)
