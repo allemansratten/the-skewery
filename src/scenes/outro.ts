@@ -28,10 +28,11 @@ export class OutroScene extends Phaser.Scene {
 
 
         const style = { fontFamily: 'Kalam', color: '#CCCCCC' }
-        let text0 = this.add.text(80, 330, '      Vilda\n(programming)\n    (chef)', style)
-        let text1 = this.add.text(310, 330, '      Vašek\n   (content)\n(programming)', style)
-        let text2 = this.add.text(550, 330, '     Jirka\n(programming)\n   (sound)', style)
-        let text3 = this.add.text(750, 330, '   Bety\n(graphics)\n  (jokes)', style)
+        let text0 = this.add.text(50, 330, '      Vilda\n(programming)\n    (chef)', style)
+        let text1 = this.add.text(240, 330, '      Vašek\n   (content)\n(programming)', style)
+        let text2 = this.add.text(430, 330, '     Jirka\n(programming)\n   (sound)', style)
+        let text3 = this.add.text(620, 330, '   Bety\n(graphics)\n  (jokes)', style)
+        let text4 = this.add.text(760, 330, '   Šach\n(content)', style)
 
         let animBouncer = (i: number) => {
             const BOUNCE_TIME = 500
@@ -42,8 +43,8 @@ export class OutroScene extends Phaser.Scene {
             // permanent rotation
             this.add.tween({
                 targets: ingredient,
-                rotation: 7 * Math.PI * 2,
-                duration: 10000,
+                rotation: 8 * Math.PI * 2,
+                duration: 12000,
             })
 
             return ingredient
