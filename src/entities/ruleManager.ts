@@ -38,6 +38,12 @@ export class RuleManager {
 
         this.initLevel()
         this.updateProgress()
+
+        let progressRefresher = () => {
+            setTimeout(progressRefresher, 300)
+            this.updateProgress()
+        }
+        progressRefresher()
     }
 
     private reset(): void {
@@ -64,7 +70,6 @@ export class RuleManager {
         let tween = this.scene.foodManager.skewers[0].die(() => {
             callback()
         })
-        // this.updateProgress()
     }
 
     private initLevel(): void {

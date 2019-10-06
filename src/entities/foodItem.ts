@@ -57,7 +57,6 @@ export class FoodItem extends Phaser.GameObjects.Image {
 
             this.removeFoodSpot()
             foodManager.rearrange()
-
         });
 
         this.on('drag', (pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
