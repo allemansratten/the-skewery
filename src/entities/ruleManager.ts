@@ -35,11 +35,14 @@ export class RuleManager {
         }
 
         this.levelText = scene.add.text(840, 340, '', { fontFamily: 'Kalam', color: 'black', fontSize: '3.2em' })
-        this.levelText.setInteractive({})
-        this.levelText.on('pointerup', () => {
-            this.curLevel += 1
-            this.initLevel()
-        })
+        // DEBUG ONLY
+        if(window.location.href.indexOf('127.0.0.1') != 0) {
+            this.levelText.setInteractive({})
+            this.levelText.on('pointerup', () => {
+                this.curLevel += 1
+                this.initLevel()
+            })
+        }
 
         this.initLevel()
         this.updateProgress()
