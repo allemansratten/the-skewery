@@ -50,24 +50,25 @@ export let levels: Level[] = [
         new CompositeRule([
             new OccurrenceRule(new RegExpEvent('....'), undefined, 0),
             new OccurrenceRule(new RegExpEvent('p'), 1, 1),
-        ], "at most 3 items, exactly one p"),
+        ], "must be at most three items, exactly one pepper"),
         new OccurrenceRule(new RegExpEvent('e'), 0, 1, "at most 1 e"),
         new CompositeRule([
             new OccurrenceRule(new RegExpEvent('p'), 2, undefined),
             new OccurrenceRule(
                 new RegExpEvent('.p.'), 1, undefined,
-                "at least one pepper not at the edge"
+                "must have at least one pepper which is not at the edge"
             ),
-        ], "at least two peppers, from which at least one not at the edge"),
+        ], "at least two peppers, from which at least one is not at the edge"),
         new CompositeRule([
             new OccurrenceRule(new RegExpEvent('(^|[^e])p($|[^e])'),
                 undefined, 0, "p must be adjacent to >= 1 e"),
             new OccurrenceRule(new RegExpEvent('epe'), undefined, 0),
-        ], "there must be exactly one e next to each p"),
+        ], "there must be exactly one eggplant next to each pepper"),
         new CompositeRule([
             new OccurrenceRule(new PalindromeEvent(), 1, undefined),
             new OccurrenceRule(new RegExpEvent('^.(..)*$'), 1, undefined),
-        ], "palindrome of an odd length"),
+            new OccurrenceRule(new RegExpEvent('e'), 1, undefined),
+        ], "must be a palindrome of an odd length containing an eggplant"),
     ], 2, 5),
     new Level([
         new OccurrenceRule(new RegExpEvent("t"), 2, undefined,
