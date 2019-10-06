@@ -87,24 +87,34 @@ let rulesToTry = [
     // Composite/more complicated rules
     new CompositeRule([
         new OccurrenceRule(new PalindromeEvent(), 1, undefined),
-        new OccurrenceRule(new RegExpEvent('^$|^..$|^....$|^......$'), 1, undefined),
+        new OccurrenceRule(new RegExpEvent('^(..)*$'), 1, undefined),
     ], "must be a palindrome of an even length"),
     new CompositeRule([
         new OccurrenceRule(new RegExpEvent('.o.'), 1, undefined),
         new OccurrenceRule(new RegExpEvent('^o|o$'), 0, 0)
-    ], "must contain an onion which is not at the edge"),
+    ], "must contain an onion and onions must not be at the edge"),
     new CompositeRule([
         new OccurrenceRule(new RegExpEvent('.t.'), 1, undefined),
         new OccurrenceRule(new RegExpEvent('^t|t$'), 1, undefined)
     ], "must contain a tomato at the edge and a tomato not at the edge"),
     new CompositeRule([
         new OccurrenceRule(new RegExpEvent('e'), 1, undefined),
+        new OccurrenceRule(new RegExpEvent('p'), 1, undefined),
         new OccurrenceRule(new RegExpEvent('p.*e'), undefined, 0)
-    ], "must contain at least one eggplant, and each eggplant must be to the left of all peppers"),
+    ], "must contain an eggplant and a pepper, and each eggplant must be to the left of all peppers"),
     new CompositeRule([
         new OccurrenceRule(new RegExpEvent('o'), 1, undefined),
+        new OccurrenceRule(new RegExpEvent('t'), 1, undefined),
         new OccurrenceRule(new RegExpEvent('t.*o'), undefined, 0)
-    ], "must contain at least one onion, and each onion must be to the left of all tomatoes"),
+    ], "must contain an onion and a tomato, and each onion must be to the left of all tomatoes"),
+    new OccurrenceRule(new RegExpEvent('oo'), 0, 0,
+        "must not have two onions next to each other"),
+    new OccurrenceRule(new RegExpEvent('tt'), 0, 0,
+        "must not have two tomatoes next to each other"),
+    new OccurrenceRule(new RegExpEvent('[^t]t|t[^t]|^t$'), 0, 0,
+        "must not have two tomatoes next to each other"),
+    new OccurrenceRule(new RegExpEvent('tt|ee|pp|oo'), 0, 0,
+        "must not have two of the same ingredient next to each other"),
 ]
 
 function solutionCount(rules : Rule[], cutoff : number) : [number, Ingredient[][][]] {

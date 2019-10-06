@@ -36,7 +36,7 @@ export let levels : Level[] = [
             "must contain exactly two kinds of ingredients"),
         new OccurrenceRule(new RegExpEvent('.'), 0, 2,
             "must be at most two items"),
-    ], 2),
+    ], 2, 4),
     new Level([
         new CompositeRule([
             new OccurrenceRule(new RegExpEvent('....'), undefined, 0),
@@ -59,7 +59,7 @@ export let levels : Level[] = [
             new OccurrenceRule(new PalindromeEvent(), 1, undefined),
             new OccurrenceRule(new RegExpEvent('^.(..)*$'), 1, undefined),
         ], "palindrome of an odd length"),
-    ], 2),
+    ], 2, 5),
     new Level([
         new OccurrenceRule(new RegExpEvent("t"), 2, undefined,
             "must have at least two tomatoes"),
