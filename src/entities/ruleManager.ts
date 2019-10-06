@@ -35,6 +35,11 @@ export class RuleManager {
         }
 
         this.levelText = scene.add.text(840, 340, '', { fontFamily: 'Kalam', color: 'black', fontSize: '3.2em' })
+        this.levelText.setInteractive({})
+        this.levelText.on('pointerup', () => {
+            this.curLevel += 1
+            this.initLevel()
+        })
 
         this.initLevel()
         this.updateProgress()
