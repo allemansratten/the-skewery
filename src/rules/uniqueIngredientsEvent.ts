@@ -1,19 +1,17 @@
 import { RuleEvent } from "./ruleEvent"
 import { arrangementToString, Ingredient } from "../misc/ingredient"
 
-export class PalindromeEvent implements RuleEvent {
+export class UniqueIngredientsEvent implements RuleEvent {
 
     constructor() {
     }
 
-    // Returns 1 for palindromes, 0 for non-palindromes
+    // Returns the number of unique ingredients
     count(arr : Ingredient[]) : number {
-        let str = arrangementToString(arr)
-        for(let i = 0; i < str.length; i++) {
-            if (str[i] !== str[str.length - 1 - i]) {
-                return 0
-            }
+        let s : Set<Ingredient> = new Set()
+        for (const ing of arr) {
+            s.add(ing)
         }
-        return 1
+        return s.size
     }
 }
