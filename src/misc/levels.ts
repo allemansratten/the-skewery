@@ -13,7 +13,7 @@ export let levels: Level[] = [
             "must have at least one tomato"),
         new OccurrenceRule(new RegExpEvent("o"), 1, undefined,
             "must have at least one onion"),
-    ], 1, 5),
+    ], 1),
     // Uvodni, rekne hracovi, ze toto bude puzzle hra o špízu
     new Level([
         new OccurrenceRule(new RegExpEvent("t"), 2, undefined,
