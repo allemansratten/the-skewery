@@ -46,6 +46,21 @@ export class FoodItem extends Phaser.GameObjects.Image {
             this.y = pointer.position.y
 
             if (this.state == FoodItemState.INVISIBLE) {
+                // sound effect
+                let markers = [
+                    { name: 'c', start:25.255, duration: 1.466, config: {} },
+                    { name: 'c', start:19.230, duration: 1.080, config: {} },
+                    { name: 'c', start:14.786, duration: 1.061, config: {} },
+                    { name: 'c', start:13.669, duration: 1.121, config: {} },
+                    { name: 'c', start: 8.142, duration: 1.156, config: {} },
+                    { name: 'c', start: 6.907, duration: 0.810, config: {} },
+                    { name: 'c', start: 5.693, duration: 0.641, config: {} },
+                    { name: 'c', start: 4.214, duration: 0.891, config: {} },
+                    { name: 'c', start: 2.837, duration: 0.565, config: {} },
+                    { name: 'c', start: 0.475, duration: 0.9, config: {} }
+                ]
+                scene.sound.play("cutting", Phaser.Math.RND.pick(markers))
+
                 base.instantiateNew()
                 this.state = FoodItemState.DRAG
                 this.setAlpha(1)
@@ -85,6 +100,15 @@ export class FoodItem extends Phaser.GameObjects.Image {
                 // clear foodspot hover
                 foodManager.resetHover()
                 foodManager.rearrange()
+
+                // put down sound
+                let markers = [
+                    { name: 'c', start: 7.065, duration: 0.184, config: {} },
+                    { name: 'c', start: 3.505, duration: 1.0, config: {} },
+                    { name: 'c', start: 1.548, duration: 1.149, config: {} },
+                    { name: 'c', start: 0.075, duration: 0.927, config: {} },
+                ]
+                this.scene.sound.play("put", Phaser.Math.RND.pick(markers))
             } else {
                 this.remove()
             }
@@ -142,5 +166,18 @@ export class FoodItem extends Phaser.GameObjects.Image {
             duration: 200,
             ease: 'Power2'
         })
+
+        // throw away sound
+        let markers = [
+            { name: 'c', start: 11.390, duration: 1.123, config: {} },
+            { name: 'c', start: 9.865, duration: 0.827, config: {} },
+            { name: 'c', start: 8.036, duration: 1.267, config: {} },
+            { name: 'c', start: 6.777, duration: 0.820, config: {} },
+            { name: 'c', start: 5.100, duration: 1.123, config: {} },
+            { name: 'c', start: 3.392, duration: 0.888, config: {} },
+            { name: 'c', start: 1.799, duration: 0.979, config: {} },
+            { name: 'c', start: 0.258, duration: 1.009, config: {} },
+        ]
+        this.scene.sound.play("rustling", Phaser.Math.RND.pick(markers))
     }
 }
