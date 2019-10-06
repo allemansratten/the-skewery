@@ -42,6 +42,13 @@ export class RuleManager {
 
     private reset(): void {
         let level = levels[this.curLevel]
+        for (let text of this.numberText) {
+            text.setColor('black')
+        }
+        for (let text of this.ruleText) {
+            text.setColor('black')
+            text.setText('')
+        }
         if (level.skewers == 1) {
             this.scene.foodManager.skewers.push(new Skewer(this.scene, this.scene.foodManager, 315, 140))
         } else {
@@ -57,6 +64,7 @@ export class RuleManager {
         let tween = this.scene.foodManager.skewers[0].die(() => {
             callback()
         })
+        // this.updateProgress()
     }
 
     private initLevel(): void {
@@ -67,7 +75,6 @@ export class RuleManager {
         } else {
             this.reset()
         }
-
     }
 
     public updateProgress(): void {
@@ -92,9 +99,20 @@ export class RuleManager {
         }
 
         if (good == levels[this.curLevel].rules.length) {
-            if (this.curLevel == levels.length - 1) {
+            if (this.curLevel == levels.length - 2) {
                 this.impale(() => {
-                    console.error('done, TODO: transition to outro')
+                    let transitionRectangle = this.scene.add.rectangle(0, 0, 900, 400, 0x000000)
+                    transitionRectangle.setOrigin(0, 0)
+                    transitionRectangle.setDepth(1000)
+                    transitionRectangle.setAlpha(0)
+                    this.scene.add.tween({
+                        targets: transitionRectangle,
+                        alpha: 1,
+                        duration: 500,
+                        onComplete: () => {
+                            this.scene.game.scene.start('OutroScene')
+                        }
+                    })
                 })
             } else {
                 this.curLevel += 1
@@ -113,6 +131,6 @@ export class RuleManager {
                 this.ruleText[i].setColor('#AA1111')
             }
         }
-        this.levelText.setText((this.curLevel + 1) + '/' + levels.length)
+        this.levelText.setText((this.curLevel + 1) + '/' + (levels.length - 1))
     }
 }
