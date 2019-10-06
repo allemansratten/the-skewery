@@ -1,13 +1,16 @@
 import "phaser"
 import { MainScene } from './scenes/main'
+import { MenuScene } from './scenes/menu'
+import { IntroScene } from './scenes/intro'
+import { OutroScene } from './scenes/outro'
 
 let gameConfig: object = {
-    title: "Skewed",
+    title: "Skewery",
     width: 900,
     height: 400,
     parent: "game_canvas",
     backgroundColor: "#000000",
-    scene: [MainScene],
+    scene: [MainScene, MenuScene, IntroScene, OutroScene],
 }
 
 window.onload = () => {
