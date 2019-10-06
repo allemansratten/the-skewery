@@ -4,7 +4,6 @@ import { levels } from '../misc/levels'
 import { MainScene } from '../scenes/main'
 import { Rule } from '../rules/rule';
 import { Skewer } from './skewer';
-import { Ingredient } from '../misc/ingredient';
 import { FoodSpot } from './foodSpot';
 
 export class RuleManager {
@@ -47,11 +46,11 @@ export class RuleManager {
         this.initLevel()
         this.updateProgress()
 
-        let progressRefresher = () => {
-            setTimeout(progressRefresher, 300)
+        // let progressRefresher = () => {
+        //     setTimeout(progressRefresher, 300)
             this.updateProgress()
-        }
-        progressRefresher()
+        // }
+        // progressRefresher()
     }
 
     private reset(): void {
@@ -77,6 +76,7 @@ export class RuleManager {
         }
         let tween = this.scene.foodManager.skewers[0].die(() => {
             callback()
+            this.updateProgress()
         })
     }
 
