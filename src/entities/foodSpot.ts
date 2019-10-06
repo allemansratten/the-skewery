@@ -12,6 +12,12 @@ export class FoodSpot extends Phaser.GameObjects.Image {
         this.setInteractive({ dropZone: true })
         this.setDisplaySize(55, 55)
         this.hover = false
+        this.setAlpha(0)
+        scene.add.tween({
+            targets: this,
+            alpha: { from: 0, to: 1},
+            duration: 700,
+        })
 
         // let width = 50, height = 50
         // this.zone = scene.add.zone(x, y, width, height).setRectangleDropZone(width, height);
@@ -28,6 +34,7 @@ export class FoodSpot extends Phaser.GameObjects.Image {
         return this.currentFoodItem === undefined
     }
 
+    // @deprecated
     public die(): void {
         this.destroy(true)
         if(!this.isFree()) {
