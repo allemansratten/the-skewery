@@ -2,11 +2,30 @@ import { Level } from "../rules/level"
 import { RegExpEvent } from "../rules/regExpEvent"
 import { OccurrenceRule } from "../rules/occurrenceRule"
 import { CompositeRule } from "../rules/compositeRule"
+import { CompareOccurencesRule } from "../rules/compareOccurencesRule"
 import { PalindromeEvent } from "../rules/palindromeEvent"
 import { UniqueIngredientsEvent } from "../rules/uniqueIngredientsEvent"
 
 
 export let levels: Level[] = [
+    new Level([
+        new CompareOccurencesRule(new RegExpEvent("e"), new RegExpEvent("p"), (x, y) => { return x >= y }, "the number of eggplants is greater or equal to the number of peppers"),
+        new OccurrenceRule(new RegExpEvent('(^|[^' + "p" + '])' + "o" + '($|[^' + "p" + '])'), undefined, 0, "each " + "onion" + " must be adjacent to a " + "pepper"),
+        new OccurrenceRule(new RegExpEvent('(^|[^' + "t" + '])' + "o" + '($|[^' + "t" + '])'), undefined, 0, "each " + "onion" + " must be adjacent to a " + "tomato"),
+        new CompareOccurencesRule(new RegExpEvent("o"), new RegExpEvent("p"), (x, y) => { return x > y }, "the number of " + "onions" + " is greater than the number of " + "peppers" + " "),
+    ], 1, 7),
+    new Level([
+        new CompareOccurencesRule(new RegExpEvent("t"), new RegExpEvent("e"), (x, y) => { return x > y }, "the number of " + "tomatos" + " is greater than the number of " + "eggplants" + " "),
+        new CompareOccurencesRule(new RegExpEvent("t"), new RegExpEvent("o"), (x, y) => { return x == y }, "the number of " + "onions" + " and " + "tomatos" + " is equal"),
+        new OccurrenceRule(new PalindromeEvent(), 1, 1, "must be a palindrome (stays the same when reversed)"),
+        new OccurrenceRule(new RegExpEvent("o" + '($|[^' + "p" + '])'), undefined, 0, "each " + "onion" + " must be left of a " + "pepper"),
+    ], 1, 7),
+    new Level([
+        new OccurrenceRule(new RegExpEvent('^o|o$'), undefined, 0, "onion not at the edge"),
+        new OccurrenceRule(new UniqueIngredientsEvent(), 4, 4, "must contain exactly four kinds of ingredients"),
+        new OccurrenceRule(new RegExpEvent('(^|[^o])e'), undefined, 0, "each eggplant must be right of onion"),
+        new OccurrenceRule(new PalindromeEvent(), 1, 1, "must be a palindrome (stays the same when reversed)"),
+    ], 1, 7),
     // Uvodni, seznami hrace s prvky na obrazovce
     new Level([
         new OccurrenceRule(new RegExpEvent("t"), 1, undefined,
