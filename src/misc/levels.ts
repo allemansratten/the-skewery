@@ -72,13 +72,13 @@ export let levels: Level[] = [
         new CompareOccurencesRule(new RegExpEvent("t"), new RegExpEvent("e"), (x, y) => { return x > y }, "the number of " + "tomatos" + " is greater than the number of " + "eggplants" + " "),
         new CompareOccurencesRule(new RegExpEvent("t"), new RegExpEvent("o"), (x, y) => { return x == y }, "the number of " + "onions" + " and " + "tomatos" + " is equal"),
         new OccurrenceRule(new PalindromeEvent(), 1, 1, "must be a palindrome (stays the same when reversed)"),
-        new OccurrenceRule(new RegExpEvent("o" + '($|[^' + "p" + '])'), undefined, 0, "each " + "onion" + " must be left of a " + "pepper"),
+        new OccurrenceRule(new RegExpEvent("o" + '($|[^' + "p" + '])'), undefined, 0, "each " + "onion" + " must be immediately to the left of a " + "pepper"),
     ], 1, 7),
     // Jirka 3
     new Level([
         new OccurrenceRule(new RegExpEvent('^o|o$'), undefined, 0, "onion not at the edge"),
         new OccurrenceRule(new UniqueIngredientsEvent(), 4, 4, "must contain exactly four kinds of ingredients"),
-        new OccurrenceRule(new RegExpEvent('(^|[^o])e'), undefined, 0, "each eggplant must be right of onion"),
+        new OccurrenceRule(new RegExpEvent('(^|[^o])e'), undefined, 0, "each eggplant must be immediately to the right of an onion"),
         new OccurrenceRule(new PalindromeEvent(), 1, 1, "must be a palindrome (stays the same when reversed)"),
     ], 1, 7),
     // Prvni rucne udelana uloha
