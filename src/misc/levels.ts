@@ -21,7 +21,7 @@ export let levels: Level[] = [
         new OccurrenceRule(new RegExpEvent("tt"), undefined, 0,
             "must not have two consecutive tomatoes"),
     ], 1, 6),
-    // Sach 4 [petp]
+    // Sach 4 [pep]
     new Level([
         new OccurrenceRule(new RegExpEvent('^p$|^p[otp]|[otp]p$|[otp]p[otp]'), undefined, 0,
             "all peppers must be adjacent to an eggplant"),
@@ -33,7 +33,7 @@ export let levels: Level[] = [
         new OccurrenceRule(new RegExpEvent('t'), undefined, 0,
             "tomatoes are not allowed"),
     ], 1, 4),
-    // Vilda 3: Lehka uloha
+    // Vilda 3: Lehka uloha [petp]
     new Level([
         new CompositeRule([
             new OccurrenceRule(new RegExpEvent("^e$|[poe]e$|^e[epo]"), undefined, 0),
@@ -47,7 +47,7 @@ export let levels: Level[] = [
         new OccurrenceRule(new RegExpEvent("o"), undefined, 0,
             "onions are forbidden"),
     ], 1, 5),
-    // Jirka 1
+    // Jirka 1 [etopot]
     new Level([
         new CompareOccurencesRule(new RegExpEvent("e"), new RegExpEvent("p"), (x, y) => { return x >= y },
             "the number of eggplants is greater or equal to the number of peppers"),
@@ -58,7 +58,7 @@ export let levels: Level[] = [
         new CompareOccurencesRule(new RegExpEvent("o"), new RegExpEvent("p"), (x, y) => { return x > y },
             "the number of onions is greater than the number of peppers"),
     ], 1, 7),
-    // Jirka 3
+    // Jirka 3 [ptoeotp]
     new Level([
         new OccurrenceRule(new RegExpEvent('^o|o$'), undefined, 0,
             "onions must not be at the edge"),
@@ -69,7 +69,7 @@ export let levels: Level[] = [
         new OccurrenceRule(new PalindromeEvent(), 1, 1,
             "must be a palindrome (stays the same when reversed)"),
     ], 1, 7),
-    // Jirka 2
+    // Jirka 2 [tpopopt]
     new Level([
         new CompareOccurencesRule(new RegExpEvent("t"), new RegExpEvent("e"), (x, y) => { return x > y },
             "the number of tomatoes is greater than the number of eggplants"),
@@ -80,7 +80,7 @@ export let levels: Level[] = [
         new OccurrenceRule(new RegExpEvent("o" + '($|[^' + "p" + '])'), undefined, 0,
             "each onion must be immediately to the left of a pepper"),
     ], 1, 7),
-    // Vilda 4: Uvodni pro dva spizy, vysvetluje, ze staci splneni na alespon jednom
+    // Vilda 4: Uvodni pro dva spizy, vysvetluje, ze staci splneni na alespon jednom [o, ootp]
     new Level([
         new OccurrenceRule(new RegExpEvent("o"), 2, undefined,
             "must have at least two onions"),
@@ -91,7 +91,7 @@ export let levels: Level[] = [
         new OccurrenceRule(new RegExpEvent(""), 0, undefined,
             "(each rule must be satisfied by at least one skewer)"),
     ], 2),
-    // Sach 3
+    // Sach 3 [ptoe, pp]
     new Level([
         new OccurrenceRule(new UniqueIngredientsEvent(), 4, undefined,
             "must contain all four different ingredients"),
@@ -106,7 +106,26 @@ export let levels: Level[] = [
         new OccurrenceRule(new RegExpEvent(".t."), 1, undefined,
             "must contain a tomato which is not at one of the edges"),
     ], 2, 4),
-    // Vasek 1: Prvni tezsi uloha, kterou jsme vytvorili
+    // Sachova uloha 1
+    new Level([
+        new OccurrenceRule(new RegExpEvent('^p.*p$'), 1, 1,
+            "must have a pepper on both edges"),
+        new CompareOccurencesRule(
+            new RegExpEvent('p'), new RegExpEvent('opo'), (x, y) => { return x === y },
+            "peppers must be adjacent to onions on both sides"
+        ),
+        new OccurrenceRule(new RegExpEvent('^(tt|ee|pp|oo)*$'), 1, 1,
+            "ingredients form pairs (each item must be adjacent to exactly one item of the same ingredient)"),
+        new CompositeRule([
+            new OccurrenceRule(new RegExpEvent('.'), 3, 3),
+            new OccurrenceRule(new UniqueIngredientsEvent(), 3, 3),
+        ], "must have exactly three pieces and their ingredients must all be different"),
+        new CompositeRule([
+            new OccurrenceRule(new RegExpEvent('(^|[^e])t($|[^e])'), undefined, 0),
+            new OccurrenceRule(new RegExpEvent('ete'), undefined, 0),
+        ], "each tomato must be adjacent to exactly one eggplant"),
+    ], 2, 4),
+    // Vasek 1: Prvni tezsi uloha, kterou jsme vytvorili [epe, pept]
     new Level([
         new CompositeRule([
             new OccurrenceRule(new RegExpEvent('....'), undefined, 0),
@@ -130,25 +149,6 @@ export let levels: Level[] = [
             new OccurrenceRule(new RegExpEvent('^.(..)*$'), 1, undefined),
             new OccurrenceRule(new RegExpEvent('e'), 1, undefined),
         ], "must be a palindrome of an odd length containing an eggplant"),
-    ], 2, 5),
-    // Sachova uloha 1
-    new Level([
-        new OccurrenceRule(new RegExpEvent('^p.*p$'), 1, 1,
-            "must have a pepper on both edges"),
-        new CompareOccurencesRule(
-            new RegExpEvent('p'), new RegExpEvent('opo'), (x, y) => { return x === y },
-            "peppers must be adjacent to onions on both sides"
-        ),
-        new OccurrenceRule(new RegExpEvent('^(tt|ee|pp|oo)*$'), 1, 1,
-            "ingredients form pairs (each item must be adjacent to exactly one item of the same ingredient)"),
-        new CompositeRule([
-            new OccurrenceRule(new RegExpEvent('.'), 3, 3),
-            new OccurrenceRule(new UniqueIngredientsEvent(), 3, 3),
-        ], "must have exactly three pieces and their ingredients must all be different"),
-        new CompositeRule([
-            new OccurrenceRule(new RegExpEvent('(^|[^e])t($|[^e])'), undefined, 0),
-            new OccurrenceRule(new RegExpEvent('ete'), undefined, 0),
-        ], "each tomato must be adjacent to exactly one eggplant"),
     ], 2, 4),
     // Sachova uloha 2
     new Level([
