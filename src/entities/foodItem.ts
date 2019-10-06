@@ -133,7 +133,7 @@ export class FoodItem extends Phaser.GameObjects.Image {
             this.scene.tweens.add({
                 targets: this,
                 x: foodSpot.x,
-                y: foodSpot.y+40,
+                y: foodSpot.y,
                 duration: 200,
                 ease: 'Power2'
             })
