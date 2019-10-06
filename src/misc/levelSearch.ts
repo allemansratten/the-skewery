@@ -32,36 +32,36 @@ const MAX_SIZE = 4
 let rulesToTry = [
     new OccurrenceRule(new RegExpEvent('(^|[^o])t($|[^o])'),
         undefined, 0, "t must be adjacent to o"),
-    new OccurrenceRule(new RegExpEvent('o'), undefined, 2),
-    new OccurrenceRule(new RegExpEvent('o'), 2, undefined),
-    new OccurrenceRule(new PalindromeEvent(), 1, 1),
-    new OccurrenceRule(new PalindromeEvent(), 0, 0),
-    new OccurrenceRule(new RegExpEvent('e'), undefined, 0),
-    new OccurrenceRule(new RegExpEvent('t'), undefined, 0),
-    new OccurrenceRule(new RegExpEvent('....'), undefined, 0),
-    new OccurrenceRule(new RegExpEvent('....'), 1, 1),
+    new OccurrenceRule(new RegExpEvent('o'), undefined, 2, "at most two o's"),
+    new OccurrenceRule(new RegExpEvent('o'), 2, undefined, "at least two o's"),
+    new OccurrenceRule(new PalindromeEvent(), 1, 1, "must be palindrome"),
+    new OccurrenceRule(new PalindromeEvent(), 0, 0, "must not be palindrome"),
+    new OccurrenceRule(new RegExpEvent('e'), undefined, 0, "must not contain e"),
+    new OccurrenceRule(new RegExpEvent('t'), undefined, 0, "must not contain t"),
+    new OccurrenceRule(new RegExpEvent('....'), undefined, 0, "must be at most 3 chars"),
+    new OccurrenceRule(new RegExpEvent('....'), 1, undefined, "must be at least 4 chars"),
     // Rules from an example level
     new CompositeRule([
         new OccurrenceRule(new RegExpEvent('....'), undefined, 0),
         new OccurrenceRule(new RegExpEvent('p'), 1, 1),
-    ]),
-    new OccurrenceRule(new RegExpEvent('e'), 0, 1),
+    ], "at most 3 items, exactly one p"),
+    new OccurrenceRule(new RegExpEvent('e'), 0, 1, "at most 1 e"),
     new CompositeRule([
         new OccurrenceRule(new RegExpEvent('p'), 2, undefined),
         new OccurrenceRule(
             new RegExpEvent('.p.'), 1, undefined,
             "at least one pepper not at the edge"
         ),
-    ]),
+    ], "at least two peppers, from which at least one not at the edge"),
     new CompositeRule([
         new OccurrenceRule(new RegExpEvent('(^|[^e])p($|[^e])'),
             undefined, 0, "p must be adjacent to >= 1 e"),
         new OccurrenceRule(new RegExpEvent('epe'), undefined, 0),
-    ]),
+    ], "there must be exactly one e next to each p"),
     new CompositeRule([
         new OccurrenceRule(new PalindromeEvent(), 1, undefined),
         new OccurrenceRule(new RegExpEvent('^.$|^...$'), 1, undefined),
-    ]),
+    ], "palindrome of an odd length"),
 ]
 
 function solutionCount(rules : Rule[], cutoff : number) : [number, Ingredient[][][]] {
@@ -102,19 +102,42 @@ function solutionCount(rules : Rule[], cutoff : number) : [number, Ingredient[][
     return [solCount, examples]
 }
 
+interface Ruleset {
+    nSolutions : number;
+    indices : number[];
+    solutions : Ingredient[][][];
+}
+
+function printRuleset(ruleset : Ruleset) {
+    console.log(`number of solutions: ${ruleset.nSolutions}`)
+    console.log("rules:")
+    for (const i of ruleset.indices) {
+        console.log(`    ${i} ${rulesToTry[i].description}`)
+    }
+    console.log("solution examples:")
+    for (const sol of ruleset.solutions) {
+        console.log(`    ${sol[0]} | ${sol[1]}`)
+    }
+    console.log()
+}
+
 function search() {
     shuffle(rulesToTry)
     let indices : number[] = []
     const nBest = 10
-    const maxNRules = 6
-    let bestRulesets = []
+    const maxNRules = 5
+    let bestRulesets : Ruleset[] = []
     let iterations = 0
+
 
     while (true) {
         iterations++
         if (iterations % 1000 === 0) {
-            console.log(iterations, "iterations")
-            console.log(bestRulesets.slice(0, 5))
+            console.log(`${iterations} iterations: vvv`)
+            for (const ruleset of bestRulesets.slice(0, 3)) {
+                printRuleset(ruleset)
+            }
+            console.log(`${iterations} iterations: ^^^`)
         }
 
         // console.log(indices)
@@ -134,7 +157,7 @@ function search() {
             bestRulesets.push({
                 nSolutions: nSolutions,
                 indices: [...indices],
-                examples: examples.map(ex => ex.map(sk => sk.map(
+                solutions: examples.map(ex => ex.map(sk => sk.map(
                     x => Utils.ingredientString(Utils.ingredientNum(x)))))
             })
             bestRulesets.sort((a, b) => {
@@ -160,8 +183,10 @@ function search() {
             break
         }
     }
-    // console.log(JSON.stringify(bestRulesets.slice(0, 2), null, 2))
-    console.log(bestRulesets)
+
+    for (const ruleset of bestRulesets) {
+        printRuleset(ruleset)
+    }
 }
 
 search()
