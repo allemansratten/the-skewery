@@ -31,6 +31,7 @@ export class FoodItem extends Phaser.GameObjects.Image {
         this.ingredient = ingredient
         this.setAlpha(0.1)
         scene.add.existing(this)
+        this.setDepth(100)
 
         // Random rotation (Bětka to tak chtěla)
         this.setRotation(Math.random() * Math.PI * 2)

@@ -46,9 +46,7 @@ export class FoodManager {
     }
     
     public rearrange() {
-        // console.log("==============================")
         for(let i = 0; i < this.skewers.length; i++) {
-            // console.log("skewer", i)
             this.rearrangeSkewer(i)
         }
     }
@@ -65,10 +63,8 @@ export class FoodManager {
         for (let spot of this.arrangement[skewerIndex]) {
             if (spot.currentFoodItem !== undefined) {
                 foodItems.push(spot.currentFoodItem)
-                // console.log(Utils.ingredientString(spot.currentFoodItem.ingredient), spot.hover)
             }
             else {
-                // console.log("Empty", spot.hover)
             }
         }
 
