@@ -16,7 +16,7 @@ export class Skewer extends Phaser.GameObjects.Image {
         this.setAlpha(0)
         scene.add.tween({
             targets: this,
-            alpha: { from: 0, to: 1},
+            alpha: { from: 0, to: 1 },
             duration: 700,
         })
 
@@ -33,13 +33,18 @@ export class Skewer extends Phaser.GameObjects.Image {
         for (let spot of this.localArrangement) {
             this.scene.tweens.add({
                 targets: spot,
-                alpha: { from: 1, to : 0 },
+                alpha: { from: 1, to: 0 },
                 duration: 500,
-                onComplete: () => { 
+                onComplete: () => {
                     spot.destroy(true)
                 }
             })
-            if(!spot.isFree()) {
+            if (!spot.isFree()) {
+                spot.currentFoodItem.setInteractive({
+                    draggable: false
+                })
+                spot.currentFoodItem.off('dragstart')
+                spot.currentFoodItem.off('drag')
                 foodItems.push(spot.currentFoodItem)
             }
         }
@@ -54,21 +59,21 @@ export class Skewer extends Phaser.GameObjects.Image {
         ]
         this.scene.sound.play("transfer_vege", Phaser.Math.RND.pick(markers))
 
-        for(let i = 0; i < foodItems.length; i++) {
+        for (let i = 0; i < foodItems.length; i++) {
             let item = foodItems[i]
 
             this.scene.tweens.add({
                 targets: item,
-                x: this.getLeftCenter().x-5,
-                y: this.getLeftCenter().y+1,
+                x: this.getLeftCenter().x - 5,
+                y: this.getLeftCenter().y + 1,
                 rotation: 0,
                 ease: 'Power2',
-                duration: 1000+i*400,
-                onComplete: () => { 
+                duration: 1000 + i * 400,
+                onComplete: () => {
                     item.setTexture('ingredient_split', Utils.ingredientNum(item.ingredient))
                     this.scene.tweens.add({
                         targets: item,
-                        x: this.getRightCenter().x-100-60*i,
+                        x: this.getRightCenter().x - 100 - 60 * i,
                         ease: 'Power2',
                         duration: 800,
                         onStart: () => {
@@ -82,14 +87,14 @@ export class Skewer extends Phaser.GameObjects.Image {
                             // this.scene.sound.play("squishing", markers[0])
                             this.scene.sound.play("squishing", Phaser.Math.RND.pick(markers))
                         },
-                        onComplete: () => { 
+                        onComplete: () => {
                             this.scene.tweens.add({
                                 targets: item,
                                 alpha: 0,
                                 ease: 'Power2',
-                                delay: 900+(foodItems.length-i)*400,
+                                delay: 900 + (foodItems.length - i) * 400,
                                 duration: 500,
-                                onComplete: () => { 
+                                onComplete: () => {
                                     item.destroy(true)
                                 }
                             })
@@ -103,12 +108,12 @@ export class Skewer extends Phaser.GameObjects.Image {
             targets: this,
             alpha: 0,
             ease: 'Power2',
-            delay: Math.max(1000+400*foodItems.length+800+900, 4000),
+            delay: Math.max(1000 + 400 * foodItems.length + 800 + 900, 4000),
             duration: 500,
             onStart: () => {
-                this.scene.sound.play("eating", { name: 'c', start: 0.0, duration: 0.5, config: {} },)
+                this.scene.sound.play("eating", { name: 'c', start: 0.0, duration: 0.5, config: {} })
             },
-            onComplete: () => { 
+            onComplete: () => {
                 this.destroy(true)
                 onComplete()
             }
