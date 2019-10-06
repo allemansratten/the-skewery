@@ -44,8 +44,19 @@ export class Skewer extends Phaser.GameObjects.Image {
             }
         }
 
+        // transfer vegetables
+        let markers = [
+            { name: 'c', start: 0.1, duration: 1.0, config: {} },
+            { name: 'c', start: 1.315, duration: 0.808, config: {} },
+            { name: 'c', start: 2.452, duration: 0.950, config: {} },
+            { name: 'c', start: 3.497, duration: 0.927, config: {} },
+            { name: 'c', start: 4.542, duration: 0.717, config: {} },
+        ]
+        this.scene.sound.play("transfer_vege", Phaser.Math.RND.pick(markers))
+
         for(let i = 0; i < foodItems.length; i++) {
             let item = foodItems[i]
+
             this.scene.tweens.add({
                 targets: item,
                 x: this.getLeftCenter().x-5,
@@ -60,6 +71,17 @@ export class Skewer extends Phaser.GameObjects.Image {
                         x: this.getRightCenter().x-100-60*i,
                         ease: 'Power2',
                         duration: 800,
+                        onStart: () => {
+                            let markers = [
+                                { name: 'c', start: 0.0, duration: 1.119, config: {} },
+                                { name: 'c', start: 1.119, duration: 1.297, config: {} },
+                                { name: 'c', start: 2.416, duration: 0.917, config: {} },
+                                { name: 'c', start: 3.330, duration: 1.018, config: {} },
+                                { name: 'c', start: 4.347, duration: 0.908, config: {} },
+                            ]
+                            // this.scene.sound.play("squishing", markers[0])
+                            this.scene.sound.play("squishing", Phaser.Math.RND.pick(markers))
+                        },
                         onComplete: () => { 
                             this.scene.tweens.add({
                                 targets: item,
@@ -83,6 +105,9 @@ export class Skewer extends Phaser.GameObjects.Image {
             ease: 'Power2',
             delay: Math.max(1000+400*foodItems.length+800+900, 4000),
             duration: 500,
+            onStart: () => {
+                this.scene.sound.play("eating", { name: 'c', start: 0.0, duration: 0.5, config: {} },)
+            }
             onComplete: () => { 
                 this.destroy(true)
                 onComplete()
